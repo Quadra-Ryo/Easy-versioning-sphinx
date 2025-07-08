@@ -1,2 +1,44 @@
-# Easy-versioning-sphinx
-A Sphinx extension/tool to manage multi-version and multi-language documentation builds without relying on ReadTheDocs. It automatically detects versions and languages, injects version switchers into your Markdown files, and builds all variants locally.
+# Easy Versioning (Sphinx documentation build tool)
+
+This Python script automates the full workflow of preparing, versioning, building, and organizing documentation from Markdown files using Sphinx.  
+
+It’s designed for teams and organizations who want to **self-host** their documentation sites and prefer full control over the hosting environment and theme customization.  
+Easy Versioning works as an **alternative approach** for managing versioned and multilingual docs, complementing existing Sphinx workflows.
+
+By organizing your source files in the expected structure, this tool actively builds your documentation with Sphinx and outputs a fully ready-to-deploy static site.  
+With minimal setup, it streamlines the process of managing multiple versions and languages, adding consistent footers, and arranging build artifacts for deployment.
+
+---
+
+## 📖 Features
+
+This project allows you to:
+
+- 🗂️ **Prepare the workspace**: clean and copy source files
+- 🔖 **Manage multiple documentation versions**
+- 🌐 **Support multiple languages** for each version
+- 📝 **Add custom footers** showing version and language info
+- ⚙️ **Build documentation** using Sphinx for every version and language
+- 📦 **Organize generated HTML files** into a clean, ready-to-deploy structure
+
+---
+
+## 🚀 Prerequisites
+
+Make sure you have the following installed:
+
+- Python 3.x
+- Sphinx (`pip install sphinx`)
+- Termcolor (`pip install termcolor`)
+
+---
+
+## 💡 Why use this?
+
+Easy Versioning offers:
+
+✅ Full control of your hosting and deployment  
+✅ Freedom to use any Sphinx theme or customization  
+✅ A simple and consistent workflow for large, multilingual, versioned docs  
+
+This tool is **not a replacement** for ReadTheDocs but rather a **complementary solution** for teams who prefer to host their own documentation or require a different setup.
