@@ -94,6 +94,24 @@ def final_cleaning():
     except Exception as e:
         error(f"An unexpected error occurred during cleanup: {e}")
  
+ ################################################################################## Data handling functions
+
+ # Functions to retrieve versions from the src dir
+def get_versions():
+    """
+    Retrieve all available documentation versions from the source directory.
+    """
+    versions = []
+    version_list_str = ""
+
+    for folder in os.listdir("_temp/src"):
+        if "_" not in folder:
+            versions.append(folder)
+            version_list_str += folder + ", "
+
+    version_list_str = version_list_str.rstrip(", ")
+    info(f"Found documentation versions: {version_list_str}")
+    return versions
 
 ################################################################################## Main
 
@@ -105,7 +123,12 @@ if __name__ == "__main__":
     initial_setup()
     success("Initial folder setup completed.")
     
-    # Do stuff
+    info("Getting all the versions")
+    versions = get_versions()
+    if not versions:
+        error("No documentation versions found. Exiting.")
+        exit(1)
+    success("Retrieved all documentation versions.")
     
     info("Final cleaning process")
     final_cleaning()
