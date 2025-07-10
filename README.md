@@ -1,6 +1,6 @@
 # Easy Versioning (Sphinx documentation build tool)
 
-This Python script automates the full workflow of preparing, versioning, building, and organizing documentation from Markdown files using Sphinx.  
+This Python script automates the full workflow of preparing, versioning, building, and organizing documentation from Markdown files using the Sphinx Framework.  
 
 It’s designed for teams and organizations who want to **self-host** their documentation sites and prefer full control over the hosting environment and theme customization.  
 Easy Versioning works as an **alternative approach** for managing versioned and multilingual docs, complementing existing Sphinx workflows.
@@ -32,6 +32,22 @@ Make sure you have the following installed:
 - Termcolor (`pip install termcolor`)
 
 ---
+
+## 🌲 Folders set-up  
+📦 Easy_versioning_Sphinx/  
+├── 📂 data/  
+│   └── 📄 Footer.md  
+├── 📂 project/  
+├── 📂 src/  
+│   ├── 📁 V. X.XX/  
+│   │   ├── 🌐 Language 1/  
+│   │   │   └── 📘 Language 1 Sphinx Project/  
+│   │   └── 🌐 Language 2/  
+│   │       └── 📘 Language 2 Sphinx Project/  
+│   ├── 📁 V. Y.YY/  
+│   └── 📁 V. Z.ZZ/  
+└── 📝 main.py  
+
 
 ## 💡 Why use this?
 
