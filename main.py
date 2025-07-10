@@ -113,16 +113,50 @@ def get_versions():
     info(f"Found documentation versions: {version_list_str}")
     return versions
 
+
+# Adding all the project data to the standard footer
+def project_data_setup(versions):
+    """
+    Update the footer template with available documentation versions.
+    """
+    
+    # Formatting the versions as a JS Array
+    version_list = "[" + ", ".join(f'"{v}"' for v in versions) + "]"
+
+    # "\t" is used to indent the HTML code properly
+    html_versions = "\n".join(
+        f"{'\t' if i == 0 else '\t\t\t\t'}<a href=\"#\" role=\"option\">{v}</a>"
+        for i, v in enumerate(versions)
+    )
+
+    with open("_temp/data/footer.md", "r") as footer_file:
+        footer = footer_file.read()
+    
+    # Replacing the file placeholders
+    footer = footer.replace("{html_v}", html_versions)
+    footer = footer.replace("{v_list}", version_list)
+    footer = footer.replace("{default_language}", DEFAULT_LANGUAGE)
+
+    with open("_temp/data/footer.md", "w") as footer_file:
+        footer_file.write(footer)
+
+    # Printing the usefull infos  
+    info(f"Updated footer with versions: {html_versions}")    
+    info(f"Updated footer with versions: {version_list}")    
+    info(f"Updated footer with versions: {DEFAULT_LANGUAGE}")
+
 ################################################################################## Main
 
 if __name__ == "__main__":
     # Main process
     info("Starting build configuration.")
     
+    # Set up workspace folders used by the tool during execution
     info("Initial set-up.")
     initial_setup()
     success("Initial folder setup completed.")
     
+    # Getting the versions of the documentation in the src folder
     info("Getting all the versions")
     versions = get_versions()
     if not versions:
@@ -130,6 +164,12 @@ if __name__ == "__main__":
         exit(1)
     success("Retrieved all documentation versions.")
     
+    # Initial set-up of the footer
+    info("Setting up the versions data")
+    project_data_setup(versions)
+    success("Setup ended")
+
+    # Cleaning the project folders
     info("Final cleaning process")
     final_cleaning()
     success("Build process completed successfully.")
