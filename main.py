@@ -9,6 +9,8 @@ FOOTER_PATH = "data"
 SRC_PATH = "src"
 BUILD_PATH = "project"
 
+################################################################################## Utils Functions
+
 # Basic logging functions
 def error(message):
     print(colored("Error: " + message, 'red'))
@@ -32,6 +34,8 @@ def handle_remove_readonly(func, path, exc_info):
     """
     os.chmod(path, stat.S_IWRITE)
     func(path)    
+
+################################################################################## Folders handling functions
 
 # Initial set-up of the folders
 def initial_setup():
@@ -71,13 +75,27 @@ def initial_setup():
         
         info("Data has been copied successfully.")
                  
-    except FileExistsError:
-        warning(f"Directory '{dir_name}' already exists.")
     except PermissionError:
-        error(f"Permission denied: Cannot create '{dir_name}'.")
+        error(f"Permission denied: Cannot create or delate '{dir_name}'.")
     except Exception as e:
         error(f"An unexpected error occurred during initial setup: {e}")
-        
+
+# Final cleanup by deleting the "_temp" folder and all contained files.
+def final_cleaning():
+    """
+    Remove temporary folders after the build process.
+    """
+    try:
+        if os.path.exists("_temp"):
+            shutil.rmtree("_temp", onexc=handle_remove_readonly)
+            info(f"Deleted temporary directory: '{"_temp"}'.")
+    except PermissionError:
+        error(f"Permission denied: Cannot delete '{"_temp"}'.")
+    except Exception as e:
+        error(f"An unexpected error occurred during cleanup: {e}")
+ 
+
+################################################################################## Main
 
 if __name__ == "__main__":
     # Main process
@@ -87,4 +105,8 @@ if __name__ == "__main__":
     initial_setup()
     success("Initial folder setup completed.")
     
+    # Do stuff
     
+    info("Final cleaning process")
+    final_cleaning()
+    success("Build process completed successfully.")
