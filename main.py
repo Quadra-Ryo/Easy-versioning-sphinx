@@ -9,6 +9,7 @@ DEFAULT_LANGUAGE = "English"
 FOOTER_PATH = "data"
 SRC_PATH = "src"
 BUILD_PATH = "project"
+CLEAN_WEBSITE = True
 
 ################################################################################## Utils Functions
 
@@ -295,7 +296,30 @@ def build_project(version_languages):
                     error(f"Exception during build for {version} / {language}: {e}.")
             else:
                 error(f"Path not found: {build_path}.")
+
+# Set up the build folder with all required versions and files for the website to function correctly
+def setup_build_folder(version_languages):
+    """
+    Copy built HTML files to the final project/build directory.
+    """
+    for version, languages in version_languages:
+        version_build_path = f"project/build/{version}"
+        os.makedirs(version_build_path, exist_ok=True)
+        info(f"Created directory: {version_build_path}")
+
+        for language in languages:
+            language_build_path = f"{version_build_path}/{language}"
+            os.makedirs(language_build_path, exist_ok=True)
+            info(f"Created directory: {language_build_path}")
+
+            source_html = f"_temp/src/{version}/{language}/_build/html"
+            
+            if CLEAN_WEBSITE:
+                shutil.rmtree(f"{source_html}/_sources", onexc=handle_remove_readonly)
                 
+            shutil.copytree(source_html, language_build_path, dirs_exist_ok=True)
+            success(f"Copied build files to: {language_build_path}")
+         
 ################################################################################## Main
 
 if __name__ == "__main__":
@@ -320,14 +344,21 @@ if __name__ == "__main__":
     project_data_setup(versions)
     success("Setup ended.")
 
+    # Adding the versioning script to the ".md" files
     info("Adding versioning to all the Markdown files:")
     version_languages = add_versioning(versions)
     success("Versioning added to all Markdown files.")
 
+    # Building the project with the sphinx build command
     info("Starting to build the project:")
     build_project(version_languages)
     success("Project built successfully.")
     
+    # Setting up the final project folder
+    info("Organizing the folders to have a ready to use website")
+    setup_build_folder(version_languages)
+    success("All build files organized in 'project/build' directory.")
+
     # Cleaning the project folders
     info("Final cleaning process:")
     final_cleaning()
