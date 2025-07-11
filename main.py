@@ -80,7 +80,7 @@ def initial_setup():
     except PermissionError:
         error(f"Permission denied: Cannot create or delate '{dir_name}'.")
     except Exception as e:
-        error(f"An unexpected error occurred during initial setup: {e}")
+        error(f"An unexpected error occurred during initial setup: {e}.")
 
 # Final cleanup by deleting the "_temp" folder and all contained files.
 def final_cleaning():
@@ -95,7 +95,7 @@ def final_cleaning():
     except PermissionError:
         error(f"Permission denied: Cannot delete '{"_temp"}'.")
     except Exception as e:
-        error(f"An unexpected error occurred during cleanup: {e}")
+        error(f"An unexpected error occurred during cleanup: {e}.")
  
  ################################################################################## Data handling functions
 
@@ -114,7 +114,7 @@ def get_versions():
             version_list_str += folder + ", "
 
     version_list_str = version_list_str.rstrip(", ")
-    info(f"Found documentation versions: {version_list_str}")
+    info(f"Found documentation versions: {version_list_str}.")
     return versions
 
 
@@ -145,9 +145,9 @@ def project_data_setup(versions):
         footer_file.write(footer)
 
     # Printing the usefull infos  
-    info(f"Updated footer with versions: {html_versions}")    
-    info(f"Updated footer with versions: {version_list}")    
-    info(f"Updated footer with versions: {DEFAULT_LANGUAGE}")
+    info(f"Updated footer with versions: {html_versions}.")    
+    info(f"Updated footer with versions: {version_list}.")    
+    info(f"Updated footer with versions: {DEFAULT_LANGUAGE}.")
 
 # Adding the actual versioning script to all the ".md" files
 def add_versioning(versions):
@@ -158,13 +158,13 @@ def add_versioning(versions):
     version_languages = []
 
     for version in versions:
-        info(f"Processing version: {version}")
+        info(f"Processing version: {version}.")
         # Retrieve available languages for the current version and update the footer accordingly
         languages = languages_current_version_setup(version)
         version_languages.append((version, languages))
 
         for language in languages:
-            info(f"Adding versioning for: {version} / {language}")
+            info(f"Adding versioning for: {version} / {language}.")
             # Adding the current language to the footer file
             change_language(language)
             lang_path = f"_temp/src/{version}/{language}"
@@ -178,7 +178,7 @@ def add_versioning(versions):
                 with open(md_file, "a") as file:
                     file.write("\n\n\n" + footer_content)
 
-            success(f"Added footer to all Markdown files in: {version} / {language}")
+            success(f"Added footer to all Markdown files in: {version} / {language}.")
             # Going back to the placeholder after finishing with the current language
             change_language(language)
             
@@ -190,7 +190,7 @@ def languages_current_version_setup(version):
     Retrieve all available languages for a specific version.
     """
 
-    info(f"Retriving the languages inside the version {version}")
+    info(f"Retriving the languages inside the version {version}.")
 
     html_languages = ""
     languages = []
@@ -228,7 +228,7 @@ def languages_current_version_setup(version):
     with open("_temp/data/temp_footer.md", "w") as footer_file:
         footer_file.write(footer)
         
-    info(f"Found languages for version '{version}': {language_list}")
+    info(f"Found languages for version '{version}': {language_list}.")
     return languages
 
 # Function used to switch from the language placeholder to the current language and back to the placeholder
@@ -254,7 +254,7 @@ def find_md(directory):
     Recursively find all Markdown files in a directory, excluding folders starting with '_'.
     """
 
-    info(f"Retrieving all the \".md\" files inside the directory '{directory}'")
+    info(f"Retrieving all the \".md\" files inside the directory '{directory}'.")
 
     # Looping inside every directory that is not a "_" folder and getting every ".md" file path
     md_files = []
@@ -277,7 +277,7 @@ def build_project(version_languages):
     for version, languages in version_languages:
         for language in languages:
             build_path = os.path.join("_temp", "src", version, language)
-            info(f"Building documentation for: {version} / {language}")
+            info(f"Building documentation for: {version} / {language}.")
 
             if os.path.exists(build_path):
                 try:
@@ -287,14 +287,14 @@ def build_project(version_languages):
                     )
 
                     if result.returncode == 0:
-                        success(f"Build successful for: {version} / {language}")
+                        success(f"Build successful for: {version} / {language}.")
                     else:
-                        error(f"Build failed for: {version} / {language}")
-                        error(result.stderr)
+                        error(f"Build failed for: {version} / {language}.")
+                        error(f"{result.stderr}.")
                 except Exception as e:
-                    error(f"Exception during build for {version} / {language}: {e}")
+                    error(f"Exception during build for {version} / {language}: {e}.")
             else:
-                error(f"Path not found: {build_path}")
+                error(f"Path not found: {build_path}.")
                 
 ################################################################################## Main
 
@@ -303,12 +303,12 @@ if __name__ == "__main__":
     info("Starting build configuration.")
     
     # Set up workspace folders used by the tool during execution
-    info("Initial set-up.")
+    info("Initial set-up:")
     initial_setup()
     success("Initial folder setup completed.")
     
     # Getting the versions of the documentation in the src folder
-    info("Getting all the versions")
+    info("Getting all the versions:")
     versions = get_versions()
     if not versions:
         error("No documentation versions found. Exiting.")
@@ -316,19 +316,19 @@ if __name__ == "__main__":
     success("Retrieved all documentation versions.")
     
     # Initial set-up of the footer
-    info("Setting up the versions data")
+    info("Setting up the versions data:")
     project_data_setup(versions)
-    success("Setup ended")
+    success("Setup ended.")
 
-    info("Adding versioning to all the Markdown files")
+    info("Adding versioning to all the Markdown files:")
     version_languages = add_versioning(versions)
     success("Versioning added to all Markdown files.")
 
-    info("Starting to build the project")
+    info("Starting to build the project:")
     build_project(version_languages)
     success("Project built successfully.")
     
     # Cleaning the project folders
-    info("Final cleaning process")
+    info("Final cleaning process:")
     final_cleaning()
     success("Build process completed successfully.")
