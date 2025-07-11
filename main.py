@@ -1,6 +1,7 @@
 import os
 import shutil
 import stat
+import subprocess
 
 from termcolor import colored
 
@@ -194,7 +195,7 @@ def languages_current_version_setup(version):
     html_languages = ""
     languages = []
     
-    # Creating a copy of the "standard project" footer where I'm gonna add only the current version/file data
+    # Creating a copy of the "standard project" footer where I'm gonna add only the specific version/file data
     shutil.copy("_temp/data/footer.md", "_temp/data/temp_footer.md")
 
     language_list = "["
@@ -264,6 +265,37 @@ def find_md(directory):
                 md_files.append(os.path.join(root, file))
     return md_files
 
+# Function that runs the Sphinx build command for every version/language folder.
+def build_project(version_languages):
+    """
+    Build the project using Sphinx for each version and language.
+    """
+    
+    # Building the sphinx build command string
+    command = ["python", "-m", "sphinx", "-b", "html", ".", "_build/html"]
+
+    for version, languages in version_languages:
+        for language in languages:
+            build_path = os.path.join("_temp", "src", version, language)
+            info(f"Building documentation for: {version} / {language}")
+
+            if os.path.exists(build_path):
+                try:
+                    # Running the build command inside of the specific folder
+                    result = subprocess.run(
+                        command, capture_output=True, text=True, cwd=build_path
+                    )
+
+                    if result.returncode == 0:
+                        success(f"Build successful for: {version} / {language}")
+                    else:
+                        error(f"Build failed for: {version} / {language}")
+                        error(result.stderr)
+                except Exception as e:
+                    error(f"Exception during build for {version} / {language}: {e}")
+            else:
+                error(f"Path not found: {build_path}")
+                
 ################################################################################## Main
 
 if __name__ == "__main__":
@@ -292,6 +324,10 @@ if __name__ == "__main__":
     version_languages = add_versioning(versions)
     success("Versioning added to all Markdown files.")
 
+    info("Starting to build the project")
+    build_project(version_languages)
+    success("Project built successfully.")
+    
     # Cleaning the project folders
     info("Final cleaning process")
     final_cleaning()
