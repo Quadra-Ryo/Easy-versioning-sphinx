@@ -1,5 +1,7 @@
 # Easy Versioning (Sphinx documentation build tool)
-
+  
+This tool was created to address the need for adding versioning to a Sphinx project without relying on Read the Docs (RTD).  
+  
 This Python script automates the full workflow of preparing, versioning, building, and organizing documentation from Markdown files using the Sphinx Framework.  
 
 It’s designed for teams and organizations who want to **self-host** their documentation sites and prefer full control over the hosting environment and theme customization.  
@@ -14,11 +16,10 @@ With minimal setup, it streamlines the process of managing multiple versions and
 
 This project allows you to:
 
-- 🗂️ **Prepare the workspace**: clean and copy source files
 - 🔖 **Manage multiple documentation versions**
 - 🌐 **Support multiple languages** for each version
 - 📝 **Add custom footers** showing version and language info
-- ⚙️ **Build documentation** using Sphinx for every version and language
+- ⚙️ **Build documentation automatically** using Sphinx for every version and language
 - 📦 **Organize generated HTML files** into a clean, ready-to-deploy structure
 
 ---
@@ -52,7 +53,8 @@ Make sure you have the following installed:
 ## 💡 Why use this?
 
 Easy Versioning offers:
-
+  
+✅ A ready-to-deploy website, already structured in the output folder  
 ✅ Full control of your hosting and deployment  
 ✅ Freedom to use any Sphinx theme or customization  
 ✅ A simple and consistent workflow for large, multilingual, versioned docs  
