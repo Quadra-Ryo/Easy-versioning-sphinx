@@ -319,7 +319,17 @@ def setup_build_folder(version_languages):
                 
             shutil.copytree(source_html, language_build_path, dirs_exist_ok=True)
             success(f"Copied build files to: {language_build_path}")
-         
+
+def add_bat(version_languages):
+    latest_version = version_languages[len(version_languages)-1][0]
+    info(f"Latest version {latest_version}")
+    bat_file = "cd \"{path}\"\n" + "start /b python -m http.server 8000 --bind 0.0.0.0\n" + "timeout /t 2 /nobreak\n" + f"explorer \"http://localhost:8000/{latest_version}/{DEFAULT_LANGUAGE}/index.html\""
+    bat_file = bat_file.replace("{path}", f"{BUILD_PATH}/build")
+    info(bat_file)
+    # Creating the bat file
+    with open(f"{BUILD_PATH}/build/start_server.bat", "w") as f:
+        f.write(bat_file)
+
 ################################################################################## Main
 
 if __name__ == "__main__":
@@ -359,7 +369,13 @@ if __name__ == "__main__":
     setup_build_folder(version_languages)
     success("All build files organized in 'project/build' directory.")
 
+    # Setting up the BAT file to start a simple Python server for hosting the website
+    info("Creating a simple .bat file to start a python server on port 8000 to test the website")
+    info("Use this .bat file if you want to use advanced features like 3D files rendering")
+    add_bat(version_languages)
+    success(".bat file created in the build folder")
+
     # Cleaning the project folders
     info("Final cleaning process:")
-    final_cleaning()
+    #final_cleaning()
     success("Build process completed successfully.")
