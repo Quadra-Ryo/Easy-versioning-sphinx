@@ -26,11 +26,10 @@ This project allows you to:
 
 ## 🚀 Prerequisites
 
-Make sure you have the following installed:
+Make sure you have the following installed on your system:
 
-- Python 3.x
-- Sphinx (`pip install sphinx`)
-- Termcolor (`pip install termcolor`)
+- Python version >= [3.8](https://www.python.org/downloads/)
+- Install the required Python libraries using `pip install -r requirements.txt`
 
 ---
 
