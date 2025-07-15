@@ -1,1 +1,1 @@
-from .main import build
+from .main import easy_versioning_build

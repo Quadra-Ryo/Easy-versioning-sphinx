@@ -331,9 +331,7 @@ def add_bat(version_languages):
     with open(f"{BUILD_PATH}/build/start_server.bat", "w") as f:
         f.write(bat_file)
 
-################################################################################## Main
-
-if __name__ == "__main__":
+def easy_versioning_build():
     # Main process
     info("Starting build configuration.")
     
@@ -380,3 +378,8 @@ if __name__ == "__main__":
     info("Final cleaning process:")
     final_cleaning()
     success("Build process completed successfully.")
+
+################################################################################## Main
+
+if __name__ == "__main__":
+    easy_versioning_build()
