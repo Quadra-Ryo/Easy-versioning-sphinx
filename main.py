@@ -6,9 +6,11 @@ import subprocess
 from termcolor import colored
 
 DEFAULT_LANGUAGE = "English"
-FOOTER_PATH = "data"
-SRC_PATH = "src"
-BUILD_PATH = "project"
+FOOTER_PATH = "Easy_versioning/data"
+SRC_PATH = "Easy_versioning/src"
+BUILD_PATH = "Easy_versioning/project"
+TEMP_PATH = "Easy_versioning/_temp"
+
 CLEAN_WEBSITE = True
 
 ################################################################################## Utils Functions
@@ -51,17 +53,17 @@ def initial_setup():
             shutil.rmtree(f"{BUILD_PATH}/build", onexc=handle_remove_readonly)
         
         # Cleaning the old "_temp" folder
-        if os.path.exists(f"_temp"):
-            shutil.rmtree(f"_temp", onexc=handle_remove_readonly)
+        if os.path.exists(TEMP_PATH):
+            shutil.rmtree(TEMP_PATH, onexc=handle_remove_readonly)
         
         info("Cleaned up the old folders.")
         
         # Creating "_temp" folder and its subfolders   
-        dir_name = "_temp"
+        dir_name = TEMP_PATH
         os.mkdir(dir_name)
-        dir_name = os.path.join("_temp", "src")
+        dir_name = os.path.join(TEMP_PATH, "src")
         os.mkdir(dir_name)
-        dir_name = os.path.join("_temp", "data")
+        dir_name = os.path.join(TEMP_PATH, "data")
         os.mkdir(dir_name)
         
         info("Created the \"_temp\" folder.")
@@ -73,8 +75,8 @@ def initial_setup():
         info("Created the final build folder.")
         
         # Copying the input data to the "_temp" folder to keep the src clean
-        shutil.copytree(SRC_PATH, os.path.join("_temp", "src"), dirs_exist_ok=True)
-        shutil.copy(f"{FOOTER_PATH}/footer.md", os.path.join("_temp", "data", "footer.md"))
+        shutil.copytree(SRC_PATH, os.path.join(TEMP_PATH, "src"), dirs_exist_ok=True)
+        shutil.copy(f"{FOOTER_PATH}/footer.md", os.path.join(TEMP_PATH, "data", "footer.md"))
         
         info("Data has been copied successfully.")
                  
@@ -90,11 +92,11 @@ def final_cleaning():
     """
 
     try:
-        if os.path.exists("_temp"):
-            shutil.rmtree("_temp", onexc=handle_remove_readonly)
-            info(f"Deleted temporary directory: '{"_temp"}'.")
+        if os.path.exists(TEMP_PATH):
+            shutil.rmtree(TEMP_PATH, onexc=handle_remove_readonly)
+            info(f"Deleted temporary directory: '{TEMP_PATH}'.")
     except PermissionError:
-        error(f"Permission denied: Cannot delete '{"_temp"}'.")
+        error(f"Permission denied: Cannot delete '{TEMP_PATH}'.")
     except Exception as e:
         error(f"An unexpected error occurred during cleanup: {e}.")
  
@@ -109,7 +111,7 @@ def get_versions():
     versions = []
     version_list_str = ""
 
-    for folder in os.listdir("_temp/src"):
+    for folder in os.listdir(f"{TEMP_PATH}/src"):
         if "_" not in folder:
             versions.append(folder)
             version_list_str += folder + ", "
@@ -134,7 +136,7 @@ def project_data_setup(versions):
         for i, v in enumerate(versions)
     )
 
-    with open("_temp/data/footer.md", "r") as footer_file:
+    with open(f"{TEMP_PATH}/data/footer.md", "r") as footer_file:
         footer = footer_file.read()
     
     # Replacing the file placeholders
@@ -142,7 +144,7 @@ def project_data_setup(versions):
     footer = footer.replace("{v_list}", version_list)
     footer = footer.replace("{default_language}", DEFAULT_LANGUAGE)
 
-    with open("_temp/data/footer.md", "w") as footer_file:
+    with open(f"{TEMP_PATH}/data/footer.md", "w") as footer_file:
         footer_file.write(footer)
 
     # Printing the usefull infos  
@@ -168,11 +170,11 @@ def add_versioning(versions):
             info(f"Adding versioning for: {version} / {language}.")
             # Adding the current language to the footer file
             change_language(language)
-            lang_path = f"_temp/src/{version}/{language}"
+            lang_path = f"{TEMP_PATH}/src/{version}/{language}"
             # Getting all the ".md" files inside the folders
             md_files = find_md(lang_path)
 
-            with open("_temp/data/temp_footer.md", "r") as footer_file:
+            with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
                 footer_content = footer_file.read()
 
             for md_file in md_files:
@@ -197,13 +199,13 @@ def languages_current_version_setup(version):
     languages = []
     
     # Creating a copy of the "standard project" footer where I'm gonna add only the specific version/file data
-    shutil.copy("_temp/data/footer.md", "_temp/data/temp_footer.md")
+    shutil.copy(f"{TEMP_PATH}/data/footer.md", f"{TEMP_PATH}/data/temp_footer.md")
 
     language_list = "["
-    version_path = f"_temp/src/{version}"
+    version_path = f"{TEMP_PATH}/src/{version}"
 
         
-    with open("_temp/data/temp_footer.md", "r") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
         footer = footer_file.read()
 
     for folder in os.listdir(version_path):
@@ -226,7 +228,7 @@ def languages_current_version_setup(version):
     footer = footer.replace("{l_list}", language_list)
     footer = footer.replace("{default_language}", DEFAULT_LANGUAGE)
 
-    with open("_temp/data/temp_footer.md", "w") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.md", "w") as footer_file:
         footer_file.write(footer)
         
     info(f"Found languages for version '{version}': {language_list}.")
@@ -238,7 +240,7 @@ def change_language(language):
     Insert the selected language into the temporary footer file.
     """
 
-    with open("_temp/data/temp_footer.md", "r") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
         footer = footer_file.read()
 
     if("{language}" in footer):
@@ -246,7 +248,7 @@ def change_language(language):
     else:
         footer = footer.replace(f"{language}</s", "{language}</s")
         
-    with open("_temp/data/temp_footer.md", "w") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.md", "w") as footer_file:
         footer_file.write(footer)
 
 # Function that search for all the ".md" files inside of a directory
@@ -277,7 +279,7 @@ def build_project(version_languages):
 
     for version, languages in version_languages:
         for language in languages:
-            build_path = os.path.join("_temp", "src", version, language)
+            build_path = os.path.join(TEMP_PATH, "src", version, language)
             info(f"Building documentation for: {version} / {language}.")
 
             if os.path.exists(build_path):
@@ -303,7 +305,7 @@ def setup_build_folder(version_languages):
     Copy built HTML files to the final project/build directory.
     """
     for version, languages in version_languages:
-        version_build_path = f"project/build/{version}"
+        version_build_path = f"{BUILD_PATH}/build/{version}"
         os.makedirs(version_build_path, exist_ok=True)
         info(f"Created directory: {version_build_path}")
 
@@ -312,7 +314,7 @@ def setup_build_folder(version_languages):
             os.makedirs(language_build_path, exist_ok=True)
             info(f"Created directory: {language_build_path}")
 
-            source_html = f"_temp/src/{version}/{language}/_build/html"
+            source_html = f"{TEMP_PATH}/src/{version}/{language}/_build/html"
             
             if CLEAN_WEBSITE:
                 shutil.rmtree(f"{source_html}/_sources", onexc=handle_remove_readonly)
@@ -377,5 +379,5 @@ if __name__ == "__main__":
 
     # Cleaning the project folders
     info("Final cleaning process:")
-    #final_cleaning()
+    final_cleaning()
     success("Build process completed successfully.")
