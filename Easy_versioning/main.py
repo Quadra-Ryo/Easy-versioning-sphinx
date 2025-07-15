@@ -6,10 +6,10 @@ import subprocess
 from termcolor import colored
 
 DEFAULT_LANGUAGE = "English"
-FOOTER_PATH = "Easy versioning/data"
-SRC_PATH = "Easy versioning/src"
-BUILD_PATH = "Easy versioning/project"
-TEMP_PATH = "Easy versioning/_temp"
+FOOTER_PATH = "Easy_versioning/data"
+SRC_PATH = "Easy_versioning/src"
+BUILD_PATH = "Easy_versioning/project"
+TEMP_PATH = "Easy_versioning/_temp"
 CLEAN_WEBSITE = True
 
 ################################################################################## Utils Functions
