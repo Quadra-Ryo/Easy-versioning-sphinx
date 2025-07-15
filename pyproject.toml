@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Easy_versioning"
+version = "1.0.0"
+description = "A Sphinx extension/tool to manage multi-version and multi-language documentation builds without relying on ReadTheDocs."
+authors = [
+    { name="Niccolò Quadrani", email="niccoloquadrani13@gmail.com" }
+]
+readme = "README.md"
+license =  "MIT"
+requires-python = ">=3.8"
+keywords = ["sphinx", "documentation", "versioning", "multi-language", "RTD", "Read The Docs"]
+dependencies = [
+    "termcolor>=2.0",
+    "sphinx>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx"
+Issues = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx/issues"
+
+[tool.setuptools]
+packages = ["easy_versioning"]
+
+[tool.setuptools.package-data]
+"easy_versioning_sphinx" = ["data/*", "src/*"]
