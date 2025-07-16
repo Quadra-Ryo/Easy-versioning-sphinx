@@ -19,7 +19,7 @@ This project allows you to:
 -  **Manage multiple documentation versions**
 -  **Support multiple languages** for each version
 -  **Add custom footers** showing version and language info
--  **Security** by ensuring a safe fallback to an existing page so users are always redirected proprely
+-  **Security** by ensuring a safe fallback to an existing page so users are always redirected properly
 -  **Build documentation automatically** using Sphinx for every version and language
 -  **Organize generated HTML files** into a clean, ready-to-deploy structure
 
@@ -34,7 +34,7 @@ Make sure you have the following installed on your system:
 
 ---
 
-## Folders set-up  
+## Directorys set-up  
 📦 Easy_versioning_Sphinx/  
 ├── 📂 data/  
 │   └── 📄 Footer.md  
@@ -46,24 +46,48 @@ Make sure you have the following installed on your system:
 │   │       └── 📘 Language 2 Sphinx Project/  
 │   ├── 📁 V. Y.YY/  
 │   ├── 📁 V. Y.YY/  
+<br>
+
+You can find a fully working example of a `Footer.md` file in the `Easy_versioning/data` folder of this project.  
+You can start by coping the default file in your `data/` folder and then customize it as you wish by modifying the CSS.  
+If you want to create your own `Footer.md` file, please follow the placeholder tags as shown in the example in the folder.
+
+<br>
+
+Inside the `src/` folder, place all your documentation projects you want to build organized according to the directory structure shown above.
+
+---
 
 ## How to use it
 
-The framework needs the folder structure shown above, after opening a terminal in the source folder of the project containing data/ and src/ run the command "easy_versioning_build".   
+The framework needs the directory structure shown above, after opening a terminal in the source directory of the project containing `data/` and `src/` run the command `easy_versioning_build`.   
 This command can be run without arguments but can support up to 2 arguments.   
 The first one will be the default language, the fallback language for undefined pages. Make sure to choose a language that is in ALL the versions of the documentation.   
-The second one is a flag, initialized to True that deletes the "_source" folder from the final build to reduce the project folder size, set the second parameter to 0 to disable cleanup and keep the folder.   
-`easy_versioning_build`  
-`easy_versioning_build Italiano 0`  <- Main project language Italian and keeping the "_source" folder of the project 
+The second one is a flag, initialized to True that removes the `_source` directory from the final build to reduce the project directory size, set the second parameter to 0 to disable cleanup and keep the directory.   
+<br>
+`easy_versioning_build` <- The main language of the project is English, and the `_source` directory is removed.  
+`easy_versioning_build Italiano 0`  <- The main language of the project is Italian, and the `_source` directory is consistently retained.  
+
+---
 
 ## Why use this?
 
 Easy Versioning offers:
   
-✅ A **ready-to-deploy** website, already structured in the output folder  
+✅ A **ready-to-deploy** website, already structured in the output directory  
 ✅ **Full control** of your hosting and deployment  
 ✅ **Freedom** to use any Sphinx theme or customization  
-✅ **Safe** fallback automatically redirects users to a valid page if their requested version or language is unavailable 
+✅ **Safe** fallback automatically redirects users to a valid page if their requested version or language is unavailable   
 ✅ A **simple** and consistent workflow for large, multilingual, versioned docs  
+
+---
+
+## Example of the versioning footer
+<br>
+<img src="https://github.com/user-attachments/assets/36babdf6-bd5d-4c43-86a3-1d65cfaf9f06" width="750" alt="Versioning Example" />
+
+---
+
+<br><br>
 
 This framework is not a replacement for ReadTheDocs but rather a **complementary free solution** for teams who prefer to host their own documentation or require a different setup.
