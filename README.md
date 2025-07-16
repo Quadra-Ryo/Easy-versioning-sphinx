@@ -1,6 +1,6 @@
 # Easy Versioning (Sphinx documentation build framework)
   
-This framework was created to address the need for adding **versioning to a Sphinx** project without relying on Read the Docs (RTD).  
+This framework was created to address the need to add **versioning to a Sphinx** project without relying on Read the Docs (RTD).  
   
 This Python script automates the full workflow of **preparing, versioning, building, and organizing documentation from Markdown** files using the Sphinx Framework.  
 
@@ -30,7 +30,7 @@ This project allows you to:
 Make sure you have the following installed on your system:
 
 - Python version >= [3.8](https://www.python.org/downloads/)
-- Install the required Python libraries using `pip install -r requirements.txt`
+- Install the framework using `pip install easy-versioning`
 
 ---
 
@@ -47,7 +47,14 @@ Make sure you have the following installed on your system:
 │   ├── 📁 V. Y.YY/  
 │   ├── 📁 V. Y.YY/  
 
+## How to use it
 
+The framework needs the folder structure shown above, after opening a terminal in the source folder of the project containing data/ and src/ run the command "easy_versioning_build".   
+This command can be run without arguments but can support up to 2 arguments.   
+The first one will be the default language, the fallback language for undefined pages. Make sure to choose a language that is in ALL the versions of the documentation.   
+The second one is a flag, initialized to True that deletes the "_source" folder from the final build to reduce the project folder size, set the second parameter to 0 to disable cleanup and keep the folder.   
+`easy_versioning_build`  
+`easy_versioning_build Italiano 0`  <- Main project language Italian and keeping the "_source" folder of the project 
 
 ## Why use this?
 
@@ -56,7 +63,7 @@ Easy Versioning offers:
 ✅ A **ready-to-deploy** website, already structured in the output folder  
 ✅ **Full control** of your hosting and deployment  
 ✅ **Freedom** to use any Sphinx theme or customization  
-✅ **Safe** fallback automatically redirects users to a valid page if their requested version or language is unavailable  
+✅ **Safe** fallback automatically redirects users to a valid page if their requested version or language is unavailable 
 ✅ A **simple** and consistent workflow for large, multilingual, versioned docs  
 
 This framework is not a replacement for ReadTheDocs but rather a **complementary free solution** for teams who prefer to host their own documentation or require a different setup.
