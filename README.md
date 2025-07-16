@@ -82,7 +82,7 @@ Easy Versioning offers:
 
 ---
 
-## Example of the versioning footer
+## Example of the versioning footer using `sphinx_book_theme`
 <br>
 <img src="https://github.com/user-attachments/assets/36babdf6-bd5d-4c43-86a3-1d65cfaf9f06" width="750" alt="Versioning Example" />
 
