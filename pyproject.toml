@@ -27,3 +27,6 @@ packages = ["easy_versioning"]
 
 [tool.setuptools.package-data]
 "easy_versioning_sphinx" = ["data/*", "src/*"]
+
+[project.scripts]
+easy_versioning_build = "easy_versioning.main:easy_versioning_build"
