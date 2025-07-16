@@ -125,102 +125,118 @@
 
 <script>
   document.querySelectorAll('.fixed-bar .dropdown').forEach(dropdown => {
-    const toggle = dropdown.querySelector('.dropdown-toggle');
-    const menu = dropdown.querySelector('.dropdown-menu');
-    const displaySpan = dropdown.querySelector('.current-value');
+  const toggle = dropdown.querySelector('.dropdown-toggle');
+  const menu = dropdown.querySelector('.dropdown-menu');
+  const displaySpan = dropdown.querySelector('.current-value');
 
-    toggle.addEventListener('click', e => {
-      e.stopPropagation();
-      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+  // Toggle dropdown menu on click
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
 
-      document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(m => {
-        if (m !== menu) m.classList.remove('show');
-      });
-      dropdown.closest('.fixed-bar').querySelectorAll('.dropdown-toggle').forEach(t => {
-        t.setAttribute('aria-expanded', 'false');
-        const caret = t.querySelector('.caret-icon');
-        if (caret) {
-          caret.classList.remove('fa-caret-up');
-          caret.classList.add('fa-caret-down');
-        }
-      });
-
-      if (!isExpanded) {
-        menu.classList.add('show');
-        toggle.setAttribute('aria-expanded', 'true');
-        const caret = toggle.querySelector('.caret-icon');
-        if (caret) {
-          caret.classList.remove('fa-caret-down');
-          caret.classList.add('fa-caret-up');
-        }
+    // Close other open dropdown menus
+    document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(m => {
+      if (m !== menu) m.classList.remove('show');
+    });
+    dropdown.closest('.fixed-bar').querySelectorAll('.dropdown-toggle').forEach(t => {
+      t.setAttribute('aria-expanded', 'false');
+      const caret = t.querySelector('.caret-icon');
+      if (caret) {
+        caret.classList.remove('fa-caret-up');
+        caret.classList.add('fa-caret-down');
       }
     });
 
-    menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const selectedValue = link.textContent.trim();
-        displaySpan.textContent = selectedValue;
-
-        const currentPath = window.location.pathname;
-        const segments = currentPath.split('/').filter(Boolean);
-
-        const languages = {l_list}; // languages placeholder
-        const versions = {v_list};  // Versions placeholder
-        const defaultLang = '{default_language}'; // languages fallback
-
-        const langIndex = segments.findIndex(s => languages.includes(s));
-        const verIndex = segments.findIndex(s => versions.includes(s));
-
-        if (toggle.textContent.includes('Language') && langIndex !== -1) {
-          segments[langIndex] = selectedValue;
-        }
-
-        if (toggle.textContent.includes('Version') && verIndex !== -1) {
-          segments[verIndex] = selectedValue;
-        }
-
-        const newPath = '/' + segments.join('/');
-
-        // Changing version/language
-        fetch(newPath, { method: 'HEAD' })
-          .then(response => {
-            if (response.ok) {
-              window.location.pathname = newPath;
-            } else {
-              const fallbackPath = `/${segments[verIndex]}/${segments[langIndex]}/index.html`;
-              fetch(fallbackPath, { method: 'HEAD' })
-                .then(fallbackResponse => {
-                  if (fallbackResponse.ok) {
-                    window.location.pathname = fallbackPath;
-                  } else {
-                    const defaultPath = `/${segments[verIndex]}/${defaultLang}/index.html`;
-                    window.location.pathname = defaultPath;
-                  }
-                })
-                .catch(() => {
-                  const defaultPath = `/${segments[verIndex]}/${defaultLang}/index.html`;
-                  window.location.pathname = defaultPath;
-                });
-            }
-          })
-          .catch(() => {
-            const fallbackPath = `/${segments[verIndex]}/${segments[langIndex]}/index.html`;
-            window.location.pathname = fallbackPath;
-          });
-
-        menu.classList.remove('show');
-        toggle.setAttribute('aria-expanded', 'false');
-        const caret = toggle.querySelector('.caret-icon');
-        if (caret) {
-          caret.classList.remove('fa-caret-up');
-          caret.classList.add('fa-caret-down');
-        }
-      });
-    });
+    // Show or hide this menu
+    if (!isExpanded) {
+      menu.classList.add('show');
+      toggle.setAttribute('aria-expanded', 'true');
+      const caret = toggle.querySelector('.caret-icon');
+      if (caret) {
+        caret.classList.remove('fa-caret-down');
+        caret.classList.add('fa-caret-up');
+      }
+    }
   });
 
-  window.addEventListener('click', () => {
+  // Handle selection of a version or language
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const selectedValue = link.textContent.trim();
+      displaySpan.textContent = selectedValue;
+
+      const currentPath = window.location.pathname;
+      const segments = currentPath.split('/').filter(Boolean);
+
+      const languages = {l_list};      // List of available languages
+      const versions = {v_list};       // List of available versions
+      const defaultLang = '{default_language}'; // Default language fallback
+
+      // Find indexes of language and version in URL
+      const langIndex = segments.findIndex(s => languages.includes(decodeURIComponent(s)));
+      const verIndex = segments.findIndex(s => versions.includes(decodeURIComponent(s)));
+
+      // Replace language or version in the path
+      if (toggle.textContent.includes('Language') && langIndex !== -1) {
+        segments[langIndex] = encodeURIComponent(selectedValue);
+      }
+      if (toggle.textContent.includes('Version') && verIndex !== -1) {
+        const fullVersion = versions.find(v => v.endsWith(selectedValue)) || selectedValue;
+        segments[verIndex] = encodeURIComponent(fullVersion);
+      }
+
+      // Build the new path
+      const newPath = '/' + segments.join('/');
+
+      // Try to load the new path
+      fetch(newPath, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            // If exists, redirect to new path
+            window.location.pathname = newPath;
+          } else {
+            // Fallback: use default language
+            if (langIndex !== -1) {
+              segments[langIndex] = encodeURIComponent(defaultLang);
+            } else {
+              // If no lang index, insert default language
+              segments.splice(verIndex + 1, 0, encodeURIComponent(defaultLang));
+            }
+            const fallbackPath = '/' + segments.join('/');
+            window.location.pathname = fallbackPath;
+          }
+        })
+        .catch(() => {
+          // On error fallback to default language
+          if (langIndex !== -1) {
+            segments[langIndex] = encodeURIComponent(defaultLang);
+          } else {
+            segments.splice(verIndex + 1, 0, encodeURIComponent(defaultLang));
+          }
+          const fallbackPath = '/' + segments.join('/');
+          window.location.pathname = fallbackPath;
+        });
+    });
+  });
+});
+
+// Close all dropdowns when clicking outside
+window.addEventListener('click', () => {
+  document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(menu => menu.classList.remove('show'));
+  document.querySelectorAll('.fixed-bar .dropdown-toggle').forEach(t => {
+    t.setAttribute('aria-expanded', 'false');
+    const caret = t.querySelector('.caret-icon');
+    if (caret) {
+      caret.classList.remove('fa-caret-up');
+      caret.classList.add('fa-caret-down');
+    }
+  });
+});
+
+// Close all dropdowns when pressing Escape
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
     document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(menu => menu.classList.remove('show'));
     document.querySelectorAll('.fixed-bar .dropdown-toggle').forEach(t => {
       t.setAttribute('aria-expanded', 'false');
@@ -230,21 +246,8 @@
         caret.classList.add('fa-caret-down');
       }
     });
-  });
-
-  window.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(menu => menu.classList.remove('show'));
-      document.querySelectorAll('.fixed-bar .dropdown-toggle').forEach(t => {
-        t.setAttribute('aria-expanded', 'false');
-        const caret = t.querySelector('.caret-icon');
-        if (caret) {
-          caret.classList.remove('fa-caret-up');
-          caret.classList.add('fa-caret-down');
-        }
-      });
-    }
-  });
+  }
+});
 </script>
 
 
