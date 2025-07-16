@@ -56,7 +56,7 @@ Easy Versioning offers:
 ✅ A **ready-to-deploy** website, already structured in the output folder  
 ✅ **Full control** of your hosting and deployment  
 ✅ **Freedom** to use any Sphinx theme or customization  
-✅ **Safe** fallback automatically redirects users to a valid page if their requested version or language is unavailable 
+✅ **Safe** fallback automatically redirects users to a valid page if their requested version or language is unavailable  
 ✅ A **simple** and consistent workflow for large, multilingual, versioned docs  
 
 This framework is not a replacement for ReadTheDocs but rather a **complementary free solution** for teams who prefer to host their own documentation or require a different setup.
