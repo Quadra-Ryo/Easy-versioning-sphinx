@@ -14,7 +14,7 @@ With minimal setup, it streamlines the process of managing multiple versions and
 
 ## Features
 
-This project allows you to:
+Easy Versioning offers the following key features:
 
 -  **Manage multiple documentation versions**
 -  **Support multiple languages** for each version
@@ -34,7 +34,7 @@ Make sure you have the following installed on your system:
 
 ---
 
-## Directorys set-up  
+## Directory Setup
 📦 Easy_versioning_Sphinx/  
 ├── 📂 data/  
 │   └── 📄 Footer.md  
@@ -49,42 +49,55 @@ Make sure you have the following installed on your system:
 <br>
 
 You can find a fully working example of a `Footer.md` file in the `Easy_versioning/data` folder of this project.  
-You can start by coping the default file in your `data/` folder and then customize it as you wish by modifying the CSS.  
+You can start by copying the default file in your `data/` folder and then customize it as you wish by modifying the CSS.  
 If you want to create your own `Footer.md` file, please follow the placeholder tags as shown in the example in the folder.
 
 <br>
 
 Inside the `src/` folder, place all your documentation projects you want to build organized according to the directory structure shown above.
 
+<br>
+
+You can find a complete example project in the `Easy_versioning/` folder, which you can download, build, and use as a setup for your own project!
+
 ---
 
 ## How to use it
 
-The framework needs the directory structure shown above, after opening a terminal in the source directory of the project containing `data/` and `src/` run the command `easy_versioning_build`.   
-This command can be run without arguments but can support up to 2 arguments.   
-The first one will be the default language, the fallback language for undefined pages. Make sure to choose a language that is in ALL the versions of the documentation.   
-The second one is a flag, initialized to True that removes the `_source` directory from the final build to reduce the project directory size, set the second parameter to 0 to disable cleanup and keep the directory.   
-<br>
-`easy_versioning_build` <- The main language of the project is English, and the `_source` directory is removed.  
-`easy_versioning_build Italiano 0`  <- The main language of the project is Italian, and the `_source` directory is consistently retained.  
+The framework requires the directory structure shown above.  
+After opening a terminal in the project’s source directory (which contains the `data/` and `src/` folders), run the command `easy_versioning_build`.
+
+This command can be run without any arguments, or with up to two arguments:
+
+1. **Default language:** The fallback language and the main language of the project (default is "English"). If no arguments are provided, make sure there is an "English" folder in every version of the documentation. Choose a language that exists in **all** versions of your documentation.  
+2. **Cleanup flag:** A boolean flag (default is True) that controls whether the `_source` directory is removed from the final build to reduce the project size.  
+   - Set this flag to `0` to disable cleanup and keep the `_source` directory.
+
+Examples:  
+- `easy_versioning_build` — Uses English as the default language and removes the `_source` directory.  
+- `easy_versioning_build Italiano 0` — Sets Italian as the default language and keeps the `_source` directory intact. 
 
 ---
 
-## Why use this?
+##  Why Choose Easy Versioning Over Other Solutions?
 
-Easy Versioning offers:
-  
-✅ A **ready-to-deploy** website, already structured in the output directory  
-✅ **Full control** of your hosting and deployment  
-✅ **Freedom** to use any Sphinx theme or customization  
-✅ **Safe** fallback automatically redirects users to a valid page if their requested version or language is unavailable   
-✅ A **simple** and consistent workflow for large, multilingual, versioned docs  
+| Feature                | Easy Versioning Sphinx | sphinx-multiversion | sphinx-versioning | Read The Docs      |
+|------------------------|-----------------------|---------------------|-------------------|-------------------|
+| Multi-version          | ✅                    | ✅                  | ✅                | ✅                |
+| Multi-language         | ✅                    | ❌                  | ❌                | ✅                |
+| Simplified setup       | ✅                    | ⚠️ Complex          | ⚠️ Complex        | ⚠️ Complex        |
+| External dependencies  | 🚫 Only Sphinx        | ✅                  | ✅                | ❌                |
+| No account required    | ✅                    | ✅                  | ✅                | ❌ (Free for OSS)  |
+| Usage cost             | ✅                    | ✅                  | ✅                | Free for OSS, paid plans for private projects |
+| Performance consistency| hardware-dependent    | hardware-dependent   | hardware-dependent | Can vary, higher performance require payment          |
 
 ---
 
 ## Example of the versioning footer using `sphinx_book_theme`
 <br>
 <img src="https://github.com/user-attachments/assets/36babdf6-bd5d-4c43-86a3-1d65cfaf9f06" width="750" alt="Versioning Example" />
+
+<br>
 
 ---
 
