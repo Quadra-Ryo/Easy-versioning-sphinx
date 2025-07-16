@@ -45,7 +45,7 @@ Make sure you have the following installed on your system:
 │   │   └── 🌐 Language 2/  
 │   │       └── 📘 Language 2 Sphinx Project/  
 │   ├── 📁 V. Y.YY/  
-│   ├── 📁 V. Y.YY/  
+│   ├── 📁 V. Z.ZZ/  
 <br>
 
 You can find a fully working example of a `Footer.md` file in the `Easy_versioning/data` folder of this project.  
