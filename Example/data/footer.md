@@ -248,7 +248,21 @@ window.addEventListener('keydown', e => {
     });
   }
 });
+
+/*
+Silly ahh frog for good luck ~ Niccolò Quadrani
+
+      (')-=-(')
+    __(   "   )__   ~ cra cra brother
+  / _/'-----'\_ \
+___\\ \\     // //___
+>____)/_\---/_\(____<
+
+*/
+
+
 </script>
+
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
