@@ -1,13 +1,13 @@
-# Easy Versioning (Sphinx documentation build framework)
+# Easy Versioning (Sphinx documentation build tool)
   
-This framework was created to address the need to add **versioning to a Sphinx** project without relying on Read the Docs (RTD).  
+This tool was created to address the need to add **versioning to a Sphinx** project without relying on Read the Docs (RTD).  
   
-This Python script automates the full workflow of **preparing, versioning, building, and organizing documentation from Markdown** files using the Sphinx Framework.  
+This Python script automates the full workflow of **preparing, versioning, building, and organizing documentation from Markdown** files using the Sphinx tool.  
 
 It’s designed for teams and organizations who want to **self-host** their documentation sites and prefer full control over the hosting environment and theme customization.  
-Easy Versioning works as an **alternative approach** for managing versioned and multilingual docs, complementing existing Sphinx workflows in a simple way with only one framework.
+Easy Versioning works as an **alternative approach** for managing versioned and multilingual docs, complementing existing Sphinx workflows in a simple way with only one tool.
 
-By organizing your source files in the expected structure, this framework actively builds your documentation with Sphinx and outputs a fully ready-to-deploy static site.  
+By organizing your source files in the expected structure, this tool actively builds your documentation with Sphinx and outputs a fully ready-to-deploy static site.  
 With minimal setup, it streamlines the process of managing multiple versions and languages, adding consistent footers, and arranging build artifacts for deployment.
 
 ---
@@ -30,7 +30,7 @@ Easy Versioning offers the following key features:
 Make sure you have the following installed on your system:
 
 - Python version >= [3.8](https://www.python.org/downloads/)
-- Install the framework using `pip install easy-versioning`
+- Install the tool using `pip install easy-versioning`
 
 ---
 
@@ -64,7 +64,7 @@ You can find a complete example project in the `Example/` folder, which you can 
 
 ## How to use it
 
-The framework requires the directory structure shown above.  
+The tool requires the directory structure shown above.  
 After opening a terminal in the project’s source directory (which contains the `data/` and `src/` folders), run the command `easy_versioning_build`.
 
 This command can be run without any arguments, or with up to two arguments:
@@ -103,4 +103,4 @@ Examples:
 
 <br><br>
 
-This framework is not a replacement for ReadTheDocs but rather a **complementary free solution** for teams who prefer to host their own documentation or require a different setup.
+This tool is not a replacement for ReadTheDocs but rather a **complementary free solution** for teams who prefer to host their own documentation or require a different setup.
