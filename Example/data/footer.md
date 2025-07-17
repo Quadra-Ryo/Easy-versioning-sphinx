@@ -249,6 +249,16 @@ window.addEventListener('keydown', e => {
   }
 });
 
+if (window.console) {
+  console.log(`
+      (')-=-(')
+    __(   "   )__   ~ cra cra brother
+  / _/'-----'\\_ \\
+___\\\\ \\\\     // //___
+>____)/_\\---/_\\(____<
+`);
+}
+
 /*
 Silly ahh frog for good luck ~ Niccolò Quadrani
 
