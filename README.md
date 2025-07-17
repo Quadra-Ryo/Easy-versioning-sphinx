@@ -48,7 +48,7 @@ Make sure you have the following installed on your system:
 │   ├── 📁 V. Z.ZZ/  
 <br>
 
-You can find a fully working example of a `Footer.md` file in the `Easy_versioning/data` folder of this project.  
+You can find a fully working example of a `Footer.md` file in the `Example/data` folder of this project.  
 You can start by copying the default file in your `data/` folder and then customize it as you wish by modifying the CSS.  
 If you want to create your own `Footer.md` file, please follow the placeholder tags as shown in the example in the folder.
 
@@ -58,7 +58,7 @@ Inside the `src/` folder, place all your documentation projects you want to buil
 
 <br>
 
-You can find a complete example project in the `Easy_versioning/` folder, which you can download, build, and use as a setup for your own project!
+You can find a complete example project in the `Example/` folder, which you can download, build, and use as a setup for your own project!
 
 ---
 
