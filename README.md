@@ -64,6 +64,11 @@ You can find a complete example project in the `Example/` folder, which you can 
 
 ## How to use it
 
+By downloading the `Example/` folder in this repository, you can access the official Easy_versioning documentation.   
+It includes detailed guides in Italian, English, and German, additionally, you can test the final output, as the documentation itself was built using this tool.  
+
+You can find a simple and easy documentation below:   
+
 The tool requires the directory structure shown above.  
 After opening a terminal in the project’s source directory (which contains the `data/` and `src/` folders), run the command `easy_versioning_build`.
 
