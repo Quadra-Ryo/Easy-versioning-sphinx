@@ -43,3 +43,8 @@ If you include a `data/` directory (alongside `src/`) containing a `footer.md` f
 
 A fully functional `footer.md` template is available at: [GitHub](https://github.com/Quadra-Ryo/Easy-versioning-sphinx/blob/main/Easy_versioning/footer.md).  
 If `data/footer.md` is not provided, the default template from the link above will be applied.
+
+Examples:  
+- `easy_versioning_build` — Uses English as the default language and removes the `_source` directory.  
+- `easy_versioning_build Italiano 0` — Sets "Italiano" as the default language (So the tool will search for the folder "Italiano" inside the versions folder) and keeps the `_source` directory intact.  
+- `easy_versioning_build Deutsch` — Sets "Deutsch" as the default language and removes the `_source` directory.  

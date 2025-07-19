@@ -353,6 +353,12 @@ Durante l’installazione, verranno automaticamente scaricati anche i pacchetti 
 <p>Se, oltre alla cartella <code class="docutils literal notranslate"><span class="pre">src/</span></code>, viene aggiunta anche una directory <code class="docutils literal notranslate"><span class="pre">data/</span></code> contenente un file <code class="docutils literal notranslate"><span class="pre">footer.md</span></code>, sarà possibile personalizzare il footer della documentazione includendo un modulo per il cambio di versione e lingua.</p>
 <p>Un esempio funzionante di <code class="docutils literal notranslate"><span class="pre">footer.md</span></code> è disponibile qui: <a class="reference external" href="https://github.com/Quadra-Ryo/Easy-versioning-sphinx/blob/main/Easy_versioning/footer.md">GitHub</a>.<br />
 In assenza del file <code class="docutils literal notranslate"><span class="pre">data/footer.md</span></code>, verrà utilizzato il template predefinito reperibile al link indicato sopra.</p>
+<p>Esempi:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span></code> — Utilizza l’inglese come lingua predefinita ed elimina la cartella <code class="docutils literal notranslate"><span class="pre">_source</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span> <span class="pre">Italiano</span> <span class="pre">0</span></code> — Imposta “Italiano” come lingua predefinita (quindi lo strumento cercherà la cartella “Italiano” all’interno della cartella delle versioni) e mantiene intatta la cartella <code class="docutils literal notranslate"><span class="pre">_source</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span> <span class="pre">Deutsch</span></code> — Imposta “Deutsch” come lingua predefinita ed elimina la cartella <code class="docutils literal notranslate"><span class="pre">_source</span></code>.</p></li>
+</ul>
 <br>
 <!-- Versions and languages set-up -->
 <style>

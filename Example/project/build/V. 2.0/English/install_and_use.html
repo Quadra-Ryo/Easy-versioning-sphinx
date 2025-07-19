@@ -355,6 +355,12 @@ document.write(`
 <p>If you include a <code class="docutils literal notranslate"><span class="pre">data/</span></code> directory (alongside <code class="docutils literal notranslate"><span class="pre">src/</span></code>) containing a <code class="docutils literal notranslate"><span class="pre">footer.md</span></code> file, you can customize the documentation footer and integrate a form for switching between versions and languages.</p>
 <p>A fully functional <code class="docutils literal notranslate"><span class="pre">footer.md</span></code> template is available at: <a class="reference external" href="https://github.com/Quadra-Ryo/Easy-versioning-sphinx/blob/main/Easy_versioning/footer.md">GitHub</a>.<br />
 If <code class="docutils literal notranslate"><span class="pre">data/footer.md</span></code> is not provided, the default template from the link above will be applied.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span></code> — Uses English as the default language and removes the <code class="docutils literal notranslate"><span class="pre">_source</span></code> directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span> <span class="pre">Italiano</span> <span class="pre">0</span></code> — Sets “Italiano” as the default language (So the tool will search for the folder “Italiano” inside the versions folder) and keeps the <code class="docutils literal notranslate"><span class="pre">_source</span></code> directory intact.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span> <span class="pre">Deutsch</span></code> — Sets “Deutsch” as the default language and removes the <code class="docutils literal notranslate"><span class="pre">_source</span></code> directory.</p></li>
+</ul>
 <br>
 <!-- Versions and languages set-up -->
 <style>

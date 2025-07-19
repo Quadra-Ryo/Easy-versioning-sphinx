@@ -354,6 +354,12 @@ document.write(`
 <p>Wird zusätzlich zur <code class="docutils literal notranslate"><span class="pre">src/</span></code>-Struktur ein <code class="docutils literal notranslate"><span class="pre">data/</span></code>-Verzeichnis mit einer Datei <code class="docutils literal notranslate"><span class="pre">footer.md</span></code> angelegt, kann der Footer der Dokumentation angepasst werden, einschließlich eines Formulars zum Wechseln von Version und Sprache.</p>
 <p>Ein funktionierendes Beispiel von <code class="docutils literal notranslate"><span class="pre">footer.md</span></code> ist hier zu finden: <a class="reference external" href="https://github.com/Quadra-Ryo/Easy-versioning-sphinx/blob/main/Easy_versioning/footer.md">GitHub</a>.<br />
 Falls kein <code class="docutils literal notranslate"><span class="pre">data/footer.md</span></code> vorhanden ist, wird das Standard-Template aus dem Link verwendet.</p>
+<p>Beispiele:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span></code> — Verwendet Englisch als Standardsprache und entfernt das Verzeichnis <code class="docutils literal notranslate"><span class="pre">_source</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span> <span class="pre">Italiano</span> <span class="pre">0</span></code> — Setzt “Italiano” als Standardsprache (das Tool sucht also nach dem Ordner “Italiano” im Versionsverzeichnis) und behält das <code class="docutils literal notranslate"><span class="pre">_source</span></code>-Verzeichnis bei.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">easy_versioning_build</span> <span class="pre">Deutsch</span></code> — Setzt “Deutsch” als Standardsprache und entfernt das Verzeichnis <code class="docutils literal notranslate"><span class="pre">_source</span></code>.</p></li>
+</ul>
 <br>
 <!-- Versions and languages set-up -->
 <style>

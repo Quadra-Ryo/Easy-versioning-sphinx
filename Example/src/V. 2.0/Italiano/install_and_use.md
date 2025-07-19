@@ -39,3 +39,8 @@ Se, oltre alla cartella `src/`, viene aggiunta anche una directory `data/` conte
 
 Un esempio funzionante di `footer.md` è disponibile qui: [GitHub](https://github.com/Quadra-Ryo/Easy-versioning-sphinx/blob/main/Easy_versioning/footer.md).  
 In assenza del file `data/footer.md`, verrà utilizzato il template predefinito reperibile al link indicato sopra.
+
+Esempi:  
+- `easy_versioning_build` — Utilizza l'inglese come lingua predefinita ed elimina la cartella `_source`.  
+- `easy_versioning_build Italiano 0` — Imposta "Italiano" come lingua predefinita (quindi lo strumento cercherà la cartella "Italiano" all'interno della cartella delle versioni) e mantiene intatta la cartella `_source`.  
+- `easy_versioning_build Deutsch` — Imposta "Deutsch" come lingua predefinita ed elimina la cartella `_source`.

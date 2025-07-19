@@ -42,3 +42,8 @@ Wird zusätzlich zur `src/`-Struktur ein `data/`-Verzeichnis mit einer Datei `fo
 
 Ein funktionierendes Beispiel von `footer.md` ist hier zu finden: [GitHub](https://github.com/Quadra-Ryo/Easy-versioning-sphinx/blob/main/Easy_versioning/footer.md).  
 Falls kein `data/footer.md` vorhanden ist, wird das Standard-Template aus dem Link verwendet.
+
+Beispiele:  
+- `easy_versioning_build` — Verwendet Englisch als Standardsprache und entfernt das Verzeichnis `_source`.  
+- `easy_versioning_build Italiano 0` — Setzt "Italiano" als Standardsprache (das Tool sucht also nach dem Ordner "Italiano" im Versionsverzeichnis) und behält das `_source`-Verzeichnis bei.  
+- `easy_versioning_build Deutsch` — Setzt "Deutsch" als Standardsprache und entfernt das Verzeichnis `_source`.
