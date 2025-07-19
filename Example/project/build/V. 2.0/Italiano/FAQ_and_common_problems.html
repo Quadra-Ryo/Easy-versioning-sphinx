@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Guida all’Installazione e all’Uso del Tool &#8212; Easy Versioning 2.0 documentation</title>
+    <title>Domande Frequenti e Problemi Comuni &#8212; Easy Versioning 2.0 documentation</title>
   
   
   
@@ -45,11 +45,10 @@
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'install_and_use';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'FAQ_and_common_problems';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Domande Frequenti e Problemi Comuni" href="FAQ_and_common_problems.html" />
-    <link rel="prev" title="Documentazione ufficiale Easy_Versioning v2.0 🇮🇹" href="index.html" />
+    <link rel="prev" title="Guida all’Installazione e all’Uso del Tool" href="install_and_use.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,8 +153,8 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Guida all’Installazione e all’Uso del Tool</a></li>
-<li class="toctree-l1"><a class="reference internal" href="FAQ_and_common_problems.html">Domande Frequenti e Problemi Comuni</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install_and_use.html">Guida all’Installazione e all’Uso del Tool</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Domande Frequenti e Problemi Comuni</a></li>
 </ul>
 
     </div>
@@ -210,7 +209,7 @@
       
       
       
-      <li><a href="_sources/install_and_use.md" target="_blank"
+      <li><a href="_sources/FAQ_and_common_problems.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -294,7 +293,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Guida all’Installazione e all’Uso del Tool</h1>
+    <h1>Domande Frequenti e Problemi Comuni</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -304,9 +303,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installazione">Installazione</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utilizzo">Utilizzo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#form-di-cambio-lingua">Form di cambio lingua</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problemi-con-il-toctree">Problemi con il Toctree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problemi-durante-la-build">Problemi Durante la Build</a></li>
 </ul>
             </nav>
         </div>
@@ -318,41 +316,23 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="guida-allinstallazione-e-alluso-del-tool">
-<h1>Guida all’Installazione e all’Uso del Tool<a class="headerlink" href="#guida-allinstallazione-e-alluso-del-tool" title="Link to this heading">#</a></h1>
-<section id="installazione">
-<h2>Installazione<a class="headerlink" href="#installazione" title="Link to this heading">#</a></h2>
-<p>Il tool è disponibile su <a class="reference external" href="https://pypi.org/project/Easy-versioning/">PyPI</a> e può essere installato facilmente utilizzando il comando <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">easy-versioning</span></code>.<br />
-Durante l’installazione, verranno automaticamente scaricati anche i pacchetti elencati nel file <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>, essenziali per il corretto funzionamento del tool.</p>
+  <section id="domande-frequenti-e-problemi-comuni">
+<h1>Domande Frequenti e Problemi Comuni<a class="headerlink" href="#domande-frequenti-e-problemi-comuni" title="Link to this heading">#</a></h1>
+<section id="problemi-con-il-toctree">
+<h2>Problemi con il Toctree<a class="headerlink" href="#problemi-con-il-toctree" title="Link to this heading">#</a></h2>
+<p>Se durante la stesura dei file <code class="docutils literal notranslate"><span class="pre">.md</span></code> si verificano errori nel <code class="docutils literal notranslate"><span class="pre">toctree</span></code>, potrebbe comparire una riga anomala come:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;link</span> <span class="pre">rel=&quot;stylesheet&quot;</span> <span class="pre">href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&quot;&gt;</span></code></p>
+<p>immediatamente dopo l’ultimo elemento del <code class="docutils literal notranslate"><span class="pre">toctree</span></code>. Questo errore è solitamente causato dalla mancata chiusura corretta del blocco <code class="docutils literal notranslate"><span class="pre">toctree</span></code>.</p>
+<p>Assicurarsi di chiudere il <code class="docutils literal notranslate"><span class="pre">toctree</span></code> utilizzando i simboli “```”.<br />
+Se il blocco termina con un nome di file <code class="docutils literal notranslate"><span class="pre">.md</span></code> non seguito dalla chiusura corretta, l’errore continuerà a presentarsi.</p>
 </section>
-<section id="utilizzo">
-<h2>Utilizzo<a class="headerlink" href="#utilizzo" title="Link to this heading">#</a></h2>
-<p>Per iniziare, è necessario organizzare le cartelle del progetto di documentazione nel seguente modo:</p>
-<p>📦 Easy_versioning_Sphinx/<br />
-├── 📂 data/<br />
-│   └── 📄 Footer.md<br />
-├── 📂 src/<br />
-│   ├── 📁 V. X.XX/<br />
-│   │   ├── 🌐 Language 1/<br />
-│   │   │   └── 📘 Language 1 Sphinx Project/<br />
-│   │   └── 🌐 Language 2/<br />
-│   │       └── 📘 Language 2 Sphinx Project/<br />
-│   ├── 📁 V. Y.YY/<br />
-│   ├── 📁 V. Z.ZZ/</p>
-<p>Dopodiché, aprire una console e posizionarsi nella directory principale del progetto (<code class="docutils literal notranslate"><span class="pre">Easy_versioning_Sphinx/</span></code> nel nostro esempio), quindi eseguire il comando: <code class="docutils literal notranslate"><span class="pre">Easy_versioning_build</span></code></p>
-<p>Il comando <code class="docutils literal notranslate"><span class="pre">Easy_versioning_build</span></code> accetta fino a due parametri opzionali:</p>
-<ol class="arabic simple">
-<li><p><strong>Lingua principale del progetto</strong> (stringa): necessaria per garantire un corretto reindirizzamento nel caso in cui una versione della documentazione non sia disponibile in tutte le lingue. La lingua specificata deve essere presente in ogni versione del progetto.</p></li>
-<li><p><strong>Gestione dei file sorgente</strong> (intero): se impostato a <code class="docutils literal notranslate"><span class="pre">0</span></code>, i file <code class="docutils literal notranslate"><span class="pre">.md</span></code> di origine <strong>non</strong> verranno eliminati dal progetto finale; altrimenti verranno rimossi per rendere il progetto più leggero e facile da distribuire.</p></li>
-</ol>
-<p>Se questi parametri non vengono specificati, il tool imposterà automaticamente la lingua predefinita su <strong>inglese</strong> ed eliminerà i file sorgente dalla build finale.</p>
-<p>I file all’interno della cartella <code class="docutils literal notranslate"><span class="pre">src/</span></code> <strong>non verranno mai modificati o sovrascritti</strong>: le impostazioni influenzano esclusivamente l’output finale del progetto.</p>
-</section>
-<section id="form-di-cambio-lingua">
-<h2>Form di cambio lingua<a class="headerlink" href="#form-di-cambio-lingua" title="Link to this heading">#</a></h2>
-<p>Se, oltre alla cartella <code class="docutils literal notranslate"><span class="pre">src/</span></code>, viene aggiunta anche una directory <code class="docutils literal notranslate"><span class="pre">data/</span></code> contenente un file <code class="docutils literal notranslate"><span class="pre">footer.md</span></code>, sarà possibile personalizzare il footer della documentazione includendo un modulo per il cambio di versione e lingua.</p>
-<p>Un esempio funzionante di <code class="docutils literal notranslate"><span class="pre">footer.md</span></code> è disponibile qui: <a class="reference external" href="https://github.com/Quadra-Ryo/Easy-versioning-sphinx/blob/main/Easy_versioning/footer.md">GitHub</a>.<br />
-In assenza del file <code class="docutils literal notranslate"><span class="pre">data/footer.md</span></code>, verrà utilizzato il template predefinito reperibile al link indicato sopra.</p>
+<section id="problemi-durante-la-build">
+<h2>Problemi Durante la Build<a class="headerlink" href="#problemi-durante-la-build" title="Link to this heading">#</a></h2>
+<p>Se durante la fase di build viene restituito l’errore:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[WinError</span> <span class="pre">32]</span> <span class="pre">Impossibile</span> <span class="pre">accedere</span> <span class="pre">al</span> <span class="pre">file.</span> <span class="pre">Il</span> <span class="pre">file</span> <span class="pre">è</span> <span class="pre">utilizzato</span> <span class="pre">da</span> <span class="pre">un</span> <span class="pre">altro</span> <span class="pre">processo</span></code></p>
+<p>verificare che il prompt dei comandi di Windows non stia ancora eseguendo un server Python o hostando il sito.</p>
+<p>Chiudere la finestra del prompt dei comandi prima di lanciare nuovamente il comando di build.<br />
+Il tool richiede accesso esclusivo a determinate directory durante l’esecuzione.</p>
 <br>
 <!-- Versions and languages set-up -->
 <style>
@@ -643,22 +623,13 @@ ___\\ \\     // //___
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="install_and_use.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Documentazione ufficiale Easy_Versioning v2.0 🇮🇹</p>
+        <p class="prev-next-title">Guida all’Installazione e all’Uso del Tool</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="FAQ_and_common_problems.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Domande Frequenti e Problemi Comuni</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -676,9 +647,8 @@ ___\\ \\     // //___
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installazione">Installazione</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utilizzo">Utilizzo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#form-di-cambio-lingua">Form di cambio lingua</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problemi-con-il-toctree">Problemi con il Toctree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problemi-durante-la-build">Problemi Durante la Build</a></li>
 </ul>
   </nav></div>
 

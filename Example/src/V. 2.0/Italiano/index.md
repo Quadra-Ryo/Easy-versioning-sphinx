@@ -24,4 +24,5 @@ In breve, **Easy_Versioning** nasce per seguire la filosofia di Sphinx: rendere 
 :hidden:
 
 install_and_use.md
+FAQ_and_common_problems.md
 ```
