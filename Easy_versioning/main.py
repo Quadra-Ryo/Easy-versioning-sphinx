@@ -4,8 +4,6 @@ import stat
 import subprocess
 import sys 
 
-from termcolor import colored
-
 default_language = "English"
 clean_website = True
 
@@ -22,17 +20,16 @@ TEMP_PATH = os.path.join(BASE_DIR, "_temp")
 
 # Basic logging functions
 def error(message):
-    print(colored("Error: " + message, 'red'))
+    print(f"\033[1;31m{message}\033[0m")
 
 def warning(message):
-    print(colored("Warning: " + message, 'yellow'))
+    print(f"\033[33m{message}\033[0m")
 
 def info(message):
-    print(colored("Info: " + message, 'blue'))
-
+    print(f"\033[34m{message}\033[0m")
 
 def success(message):
-    print(colored("Success: " + message, 'green'))
+    print(f"\033[32m{message}\033[0m")
 
 # Clearing the read-only to remove files without any problem
 def handle_remove_readonly(func, path, exc_info):
