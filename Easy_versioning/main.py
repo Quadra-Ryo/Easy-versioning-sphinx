@@ -20,10 +20,10 @@ TEMP_PATH = os.path.join(BASE_DIR, "_temp")
 
 # Basic logging functions
 def error(message):
-    print(f"\033[1;31m{message}\033[0m")
+    print(f"\033[1;31mERROR: {message}\033[0m")
 
 def warning(message):
-    print(f"\033[33m{message}\033[0m")
+    print(f"\033[33mWARNING: {message}\033[0m")
 
 def info(message):
     print(f"\033[34m{message}\033[0m")
@@ -100,6 +100,22 @@ def final_cleaning():
     except Exception as e:
         error(f"An unexpected error occurred during cleanup: {e}.")
  
+def check_default_language(versions):
+    """
+    Checking for the presence of the default language inside all the versions folders.
+    """
+
+    output = 0
+
+    # Checking for the correct language but wrongly written or checking if in some versions I don't have the default language folder
+    for version in versions:
+        language_path_lower = f"{SRC_PATH}/{version}/{default_language.lower()}"
+        language_path = f"{SRC_PATH}/{version}/{default_language}"        
+        if(not(os.path.exists(language_path))):
+            output = -1
+     
+    return output
+
  ################################################################################## Data handling functions
 
  # Functions to retrieve versions from the src dir
@@ -336,6 +352,8 @@ def easy_versioning_build():
     global default_language
     global clean_website
     
+    status = 0
+
     args = sys.argv[1:]  # Prende i parametri da riga di comando, escluso il nome dello script
     language = args[0] if len(args) > 0 else None
     clean = args[1] if len(args) > 1 else None
@@ -364,6 +382,10 @@ def easy_versioning_build():
         exit(1)
     success("Retrieved all documentation versions.")
     
+    status = check_default_language(versions)
+    if status == -1:
+        warning("The default language is not present in every version of the documentation! This may cause problems")
+
     # Initial set-up of the footer
     info("Setting up the versions data:")
     project_data_setup(versions)

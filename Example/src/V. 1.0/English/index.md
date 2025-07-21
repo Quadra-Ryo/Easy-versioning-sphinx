@@ -1,4 +1,2 @@
 # V. 1.0 English
-
-This page is a standard Sphinx page!
-
+This is a simple English Sphinx page!
