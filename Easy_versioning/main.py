@@ -9,6 +9,8 @@ clean_website = True
 
 # Get the terminal path from which the script is executed
 BASE_DIR = os.getcwd()
+MODULE_DIR = os.path.dirname(os.path.abspath(__file__)) # Main script folder
+DEFAULT_FOOTER = os.path.join(MODULE_DIR, "data", "footer.md")
 
 # Initialize paths used throughout the script
 FOOTER_PATH = os.path.join(BASE_DIR, "data")
@@ -76,8 +78,12 @@ def initial_setup():
         
         # Copying the input data to the "_temp" folder to keep the src clean
         shutil.copytree(SRC_PATH, os.path.join(TEMP_PATH, "src"), dirs_exist_ok=True)
-        shutil.copy(f"{FOOTER_PATH}/footer.md", os.path.join(TEMP_PATH, "data", "footer.md"))
-        
+        if os.path.exists(f"{FOOTER_PATH}/footer.md"):
+            shutil.copy(f"{FOOTER_PATH}/footer.md", os.path.join(TEMP_PATH, "data", "footer.md"))
+        else:
+            warning(f"Using the default footer: {DEFAULT_FOOTER}")
+            shutil.copy(DEFAULT_FOOTER, os.path.join(TEMP_PATH, "data", "footer.md"))
+
         info("Data has been copied successfully.")
                  
     except PermissionError:

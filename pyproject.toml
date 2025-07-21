@@ -26,7 +26,9 @@ Issues = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx/issues"
 packages = ["easy_versioning"]
 
 [tool.setuptools.package-data]
-"easy_versioning_sphinx" = ["data/*", "src/*"]
+"easy_versioning" = ["data/*"]
 
 [project.scripts]
 easy_versioning_build = "easy_versioning.main:easy_versioning_build"
+
+
