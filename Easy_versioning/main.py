@@ -51,8 +51,9 @@ def initial_setup():
 
     try:
         # Cleaning the old build if exists
-        if os.path.exists(f"{BUILD_PATH}/build"):
-            shutil.rmtree(f"{BUILD_PATH}/build", onexc=handle_remove_readonly)
+        build_path = os.path.join(BUILD_PATH, "build")
+        if os.path.exists(build_path):
+            shutil.rmtree(build_path, onexc=handle_remove_readonly)
         
         # Cleaning the old "_temp" folder
         if os.path.exists(TEMP_PATH):
@@ -78,8 +79,9 @@ def initial_setup():
         
         # Copying the input data to the "_temp" folder to keep the src clean
         shutil.copytree(SRC_PATH, os.path.join(TEMP_PATH, "src"), dirs_exist_ok=True)
-        if os.path.exists(f"{FOOTER_PATH}/footer.md"):
-            shutil.copy(f"{FOOTER_PATH}/footer.md", os.path.join(TEMP_PATH, "data", "footer.md"))
+        footer_path = os.path.join(FOOTER_PATH, "footer.md")
+        if os.path.exists(footer_path):
+            shutil.copy(footer_path, os.path.join(TEMP_PATH, "data", "footer.md"))
         else:
             warning(f"Using the default footer: {DEFAULT_FOOTER}")
             shutil.copy(DEFAULT_FOOTER, os.path.join(TEMP_PATH, "data", "footer.md"))
@@ -115,8 +117,7 @@ def check_default_language(versions):
 
     # Checking for the correct language but wrongly written or checking if in some versions I don't have the default language folder
     for version in versions:
-        language_path_lower = f"{SRC_PATH}/{version}/{default_language.lower()}"
-        language_path = f"{SRC_PATH}/{version}/{default_language}"        
+        language_path = os.path.join(SRC_PATH,version,default_language)       
         if(not(os.path.exists(language_path))):
             output = -1
      
@@ -375,6 +376,11 @@ def easy_versioning_build():
     # Main process 
     info("Starting build configuration.")
     
+    info("Initial checks")
+    if not (os.path.exists(SRC_PATH)):
+        error("No source folder found. Exiting.")
+        exit(1)
+
     # Set up workspace folders used by the tool during execution
     info("Initial set-up:")
     initial_setup()
