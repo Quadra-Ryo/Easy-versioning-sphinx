@@ -3,6 +3,11 @@ import shutil
 import stat
 import subprocess
 import sys 
+import threading
+import http.server
+import socketserver
+import webbrowser
+import time
 
 default_language = "English"
 clean_website = True
@@ -345,6 +350,7 @@ def setup_build_folder(version_languages):
             shutil.copytree(source_html, language_BUILD_PATH, dirs_exist_ok=True)
             success(f"Copied build files to: {language_BUILD_PATH}")
 
+# Adding the bat file in the build path to give a quick start menu using cmd
 def add_bat(version_languages):
     latest_version = version_languages[len(version_languages)-1][0]
     info(f"Latest version {latest_version}")
@@ -361,13 +367,54 @@ def add_bat(version_languages):
     with open(f"{BUILD_PATH}/build/start_server.bat", "w") as f:
         f.write(bat_file)
 
+    return [latest_version, default_language]
+
+# Starting a quick server on port 8000 to give the user immediate feedback on the documentation.
+def start_quick_server(latest_version, default_language):
+    """
+    Start a static HTTP server on localhost:8001 and open the documentation homepage.
+    """
+    port = 8001 # Not 8000 to not use the same port as the bat file's server
+    root_path = os.path.join(BUILD_PATH, "build")
+    os.chdir(root_path)
+
+    url = f"http://localhost:{port}/{latest_version}/{default_language}/index.html"
+
+    handler = http.server.SimpleHTTPRequestHandler
+    httpd = socketserver.TCPServer(("", port), handler)
+
+    def serve():
+        info(f"Serving documentation at: {url}")
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            pass
+        httpd.server_close()
+        info("Server shut down.")
+
+    # Start the server in a different thread
+    thread = threading.Thread(target=serve)
+    thread.daemon = True
+    thread.start()
+
+    # Waiting for the server to open correctly
+    time.sleep(1)
+
+    success(f"\n\nServer is running,  Visit your documentation at:\n{url.replace(" ", "%20")}")
+
+    try:
+        input("Press Enter to stop the server...\n")
+    except KeyboardInterrupt:
+        print("\nServer interrupted by user.")
+
+# Main building function
 def easy_versioning_build():
     global default_language
     global clean_website
     
     status = 0
 
-    args = sys.argv[1:]  # Prende i parametri da riga di comando, escluso il nome dello script
+    args = sys.argv[1:]  # Takes the parameters from the command line
     language = args[0] if len(args) > 0 else None
     clean = args[1] if len(args) > 1 else None
 
@@ -427,7 +474,7 @@ def easy_versioning_build():
     # Setting up the BAT file to start a simple Python server for hosting the website
     info("Creating a simple .bat file to start a python server on port 8000 to test the website")
     info("Use this .bat file if you want to use advanced features like 3D files rendering")
-    link = add_bat(version_languages)
+    link_data = add_bat(version_languages)
     success(".bat file created in the build folder")
 
     # Cleaning the project folders
@@ -435,8 +482,8 @@ def easy_versioning_build():
     final_cleaning()
     success("Build process completed successfully.")
 
-    success("\n\nServer started hosting your documentation click the link below to open it in the browser")
-    info(link.replace)
+    start_quick_server(link_data[0], link_data[1])
+
 ################################################################################## Main
 
 if __name__ == "__main__":
