@@ -348,8 +348,14 @@ def setup_build_folder(version_languages):
 def add_bat(version_languages):
     latest_version = version_languages[len(version_languages)-1][0]
     info(f"Latest version {latest_version}")
-    bat_file = "cd \"{path}\"\n" + "start /b python -m http.server 8000 --bind 0.0.0.0\n" + "timeout /t 2 /nobreak\n" + f"explorer \"http://localhost:8000/{latest_version}/{default_language}/index.html\""
-    bat_file = bat_file.replace("{path}", f"{BUILD_PATH}/build")
+
+    bat_file =  (
+                f'cd "{BUILD_PATH}/build"\n'
+                'start /b python -m http.server 8000 --bind 0.0.0.0\n'
+                'timeout /t 2 /nobreak\n'
+                f'explorer "http://localhost:8000/{latest_version}/{default_language}/index.html"'
+                )
+
     info(bat_file)
     # Creating the bat file
     with open(f"{BUILD_PATH}/build/start_server.bat", "w") as f:
@@ -421,7 +427,7 @@ def easy_versioning_build():
     # Setting up the BAT file to start a simple Python server for hosting the website
     info("Creating a simple .bat file to start a python server on port 8000 to test the website")
     info("Use this .bat file if you want to use advanced features like 3D files rendering")
-    add_bat(version_languages)
+    link = add_bat(version_languages)
     success(".bat file created in the build folder")
 
     # Cleaning the project folders
@@ -429,6 +435,8 @@ def easy_versioning_build():
     final_cleaning()
     success("Build process completed successfully.")
 
+    success("\n\nServer started hosting your documentation click the link below to open it in the browser")
+    info(link.replace)
 ################################################################################## Main
 
 if __name__ == "__main__":
