@@ -1,13 +1,35 @@
 import os
 import sys
+import shutil
+import stat
 
 # Addding the python tool
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Easy_versioning.main import initial_setup, final_cleaning
 
+# Utils functions
+def success(message):
+    print(f"\033[32m{message}\033[0m")
+
+def info(message):
+    print(f"\033[34m{message}\033[0m")
+
+def handle_remove_readonly(func, path, exc_info):
+    os.chmod(path, stat.S_IWRITE)
+    func(path)    
+
+def clean_folders():
+    if not(os.path.exists("src")):
+        shutil.rmtree("src",  onexc=handle_remove_readonly)
+
+    if not(os.path.exists("project")):
+        shutil.rmtree("project",  onexc=handle_remove_readonly)
+
+# Test functions
 def test_initial_setup():
-    
+    info("Running initial set-up test")
+
     # Setting up the src folder to use the functions correctly
     if not(os.path.exists("src")):
         os.mkdir("src")
@@ -18,9 +40,13 @@ def test_initial_setup():
     # Checking if the folders were created
     if not(os.path.exists("project/build")) or not(os.path.exists("_temp")):
         assert False, "Initial_setup function: Impossible to create the initial folders"
+
+    success("Initial set-up working")
     assert True
 
 def test_final_cleaning():
+    info("Running final cleaning test")
+
     # Function call
     final_cleaning()
 
@@ -28,6 +54,7 @@ def test_final_cleaning():
     if os.path.exists("_temp"):
         assert False, "Final cleaning function: Impossible to clean the folders"
 
+    success("Final cleaning working")
     assert True
 
 # Using the tests function before an official new version of the tool
@@ -38,4 +65,5 @@ if __name__ == "__main__":
     test_final_cleaning()
 
     # Test finished
-    print("Tests passed.")
+    success("Tests passed.")
+    final_cleaning()
