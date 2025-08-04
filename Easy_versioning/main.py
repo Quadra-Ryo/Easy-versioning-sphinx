@@ -40,9 +40,11 @@ def success(message):
 
 # Clearing the read-only to remove files without any problem
 def handle_remove_readonly(func, path, exc_info):
+
     """
     Clear read-only attribute from a file and retry removal.
     """
+
     os.chmod(path, stat.S_IWRITE)
     func(path)    
 
@@ -50,6 +52,7 @@ def handle_remove_readonly(func, path, exc_info):
 
 # Initial set-up of the folders
 def initial_setup():
+
     """
     Prepare the workspace by cleaning old builds and copying source files.
     """
@@ -132,6 +135,7 @@ def check_default_language(versions):
 
  # Functions to retrieve versions from the src dir
 def get_versions():
+
     """
     Retrieve all available documentation versions from the source directory.
     """
@@ -156,9 +160,9 @@ def project_data_setup(versions):
     """
     
     # Formatting the versions as a JS Array
-    version_list = "[" + ", ".join(f'"{v}"' for v in versions) + "]"
+    version_list = "[" + ", ".join(f'"{v}"' for v in versions) + "]" # Example [English, Italiano, ...]
 
-    # "\t" is used to indent the HTML code properly
+    # "\t" is used to indent the HTML code properly in the file
     html_versions = "\n".join(
         f"{'\t' if i == 0 else '\t\t\t\t'}<a href=\"#\" role=\"option\">{v}</a>"
         for i, v in enumerate(versions)
@@ -182,6 +186,7 @@ def project_data_setup(versions):
 
 # Adding the actual versioning script to all the ".md" files
 def add_versioning(versions):
+
     """
     Append versioning information to all Markdown files.
     """
@@ -217,6 +222,7 @@ def add_versioning(versions):
 
 # Retriving all the available languages for a specific version of the documentation
 def languages_current_version_setup(version):
+
     """
     Retrieve all available languages for a specific version.
     """
@@ -229,6 +235,7 @@ def languages_current_version_setup(version):
     # Creating a copy of the "standard project" footer where I'm gonna add only the specific version/file data
     shutil.copy(f"{TEMP_PATH}/data/footer.md", f"{TEMP_PATH}/data/temp_footer.md")
 
+    # Variables intitial set-up
     language_list = "["
     version_path = f"{TEMP_PATH}/src/{version}"
 
@@ -264,6 +271,7 @@ def languages_current_version_setup(version):
 
 # Function used to switch from the language placeholder to the current language and back to the placeholder
 def change_language(language):
+
     """
     Insert the selected language into the temporary footer file.
     """
@@ -271,6 +279,7 @@ def change_language(language):
     with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
         footer = footer_file.read()
 
+    # Replacing the placeholder with the languages the first time and than back with the placeholder
     if("{language}" in footer):
         footer = footer.replace("{language}", language)
     else:
@@ -281,6 +290,7 @@ def change_language(language):
 
 # Function that search for all the ".md" files inside of a directory
 def find_md(directory):
+
     """
     Recursively find all Markdown files in a directory, excluding folders starting with '_'.
     """
@@ -298,15 +308,17 @@ def find_md(directory):
 
 # Function that runs the Sphinx build command for every version/language folder.
 def build_project(version_languages):
+
     """
     Build the project using Sphinx for each version and language.
     """
     
-    # Building the sphinx build command string
+    # Creating the sphinx build command string
     command = ["python", "-m", "sphinx", "-b", "html", ".", "_build/html"]
 
     for version, languages in version_languages:
         for language in languages:
+            # Moving in the current folder
             BUILD_PATH = os.path.join(TEMP_PATH, "src", version, language)
             info(f"Building documentation for: {version} / {language}.")
 
@@ -329,15 +341,19 @@ def build_project(version_languages):
 
 # Set up the build folder with all required versions and files for the website to function correctly
 def setup_build_folder(version_languages):
+
     """
     Copy built HTML files to the final project/build directory.
     """
+
     for version, languages in version_languages:
+        # Setting up the version in the path
         version_BUILD_PATH = f"{BUILD_PATH}/build/{version}"
         os.makedirs(version_BUILD_PATH, exist_ok=True)
         info(f"Created directory: {version_BUILD_PATH}")
 
         for language in languages:
+            # Setting up the language in the path for every language inside the current version folder
             language_BUILD_PATH = f"{version_BUILD_PATH}/{language}"
             os.makedirs(language_BUILD_PATH, exist_ok=True)
             info(f"Created directory: {language_BUILD_PATH}")
@@ -352,7 +368,12 @@ def setup_build_folder(version_languages):
 
 # Adding the bat file in the build path to give a quick start menu using cmd
 def add_bat(version_languages):
-    latest_version = version_languages[len(version_languages)-1][0]
+
+    """
+    Build and adds a simple bat file used to start a python tcp server.
+    """
+
+    latest_version = version_languages[len(version_languages)-1][0] # Getting the last available version from the data in input
     info(f"Latest version {latest_version}")
 
     bat_file =  (
@@ -371,15 +392,18 @@ def add_bat(version_languages):
 
 # Starting a quick server on port 8000 to give the user immediate feedback on the documentation.
 def start_quick_server(latest_version, default_language):
+
     """
     Start a static HTTP server on localhost:8001 and open the documentation homepage.
     """
+
     port = 8001 # Not 8000 to not use the same port as the bat file's server
     root_path = os.path.join(BUILD_PATH, "build")
     os.chdir(root_path)
 
     url = f"http://localhost:{port}/{latest_version}/{default_language}/index.html"
-
+    
+    # Server variables
     handler = http.server.SimpleHTTPRequestHandler
     httpd = socketserver.TCPServer(("", port), handler)
 
@@ -400,6 +424,7 @@ def start_quick_server(latest_version, default_language):
     # Waiting for the server to open correctly
     time.sleep(1)
 
+    # Giving quick access using the console to the user
     success(f"\n\nServer is running,  Visit your documentation at:\n{url.replace(" ", "%20")}")
 
     try:
@@ -409,6 +434,11 @@ def start_quick_server(latest_version, default_language):
 
 # Main building function
 def easy_versioning_build():
+
+    """
+    Calling all the functions .
+    """
+     
     global default_language
     global clean_website
     
@@ -418,6 +448,7 @@ def easy_versioning_build():
     language = args[0] if len(args) > 0 else None
     clean = args[1] if len(args) > 1 else None
 
+    # Checking for the inputted parameters
     if language is not None:
         info(f"Setting up the default language to {language}.")
         default_language = language
@@ -474,7 +505,7 @@ def easy_versioning_build():
     # Setting up the BAT file to start a simple Python server for hosting the website
     info("Creating a simple .bat file to start a python server on port 8000 to test the website")
     info("Use this .bat file if you want to use advanced features like 3D files rendering")
-    link_data = add_bat(version_languages)
+    link_data = add_bat(version_languages) # Getting the latest version and default language
     success(".bat file created in the build folder")
 
     # Cleaning the project folders
