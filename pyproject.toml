@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Easy_versioning"
-version = "1.0.5"
+version = "1.0.6"
 description = "A Sphinx extension/tool to manage multi-version and multi-language documentation builds without relying on ReadTheDocs."
 authors = [
     { name="Niccolò Quadrani", email="niccoloquadrani13@gmail.com" }

@@ -525,7 +525,6 @@ Il tool richiede accesso esclusivo a determinate directory durante l’esecuzion
       // Build the new path
       const newPath = '/' + segments.join('/');
 
-      // Try to load the new path
       fetch(newPath, { method: 'HEAD' })
         .then(response => {
           if (response.ok) {
@@ -540,19 +539,45 @@ Il tool richiede accesso esclusivo a determinate directory durante l’esecuzion
               segments.splice(verIndex + 1, 0, encodeURIComponent(defaultLang));
             }
             const fallbackPath = '/' + segments.join('/');
-            window.location.pathname = fallbackPath;
+
+            fetch(fallbackPath, { method: 'HEAD' })
+              .then(r2 => {
+                if (r2.ok) {
+                  window.location.pathname = fallbackPath;
+                } else {
+                  const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
+                  window.location.pathname = versionIndexFallback;
+                }
+              })
+              .catch(() => {
+                const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
+                window.location.pathname = versionIndexFallback;
+              });
           }
         })
         .catch(() => {
-          // On error fallback to default language
           if (langIndex !== -1) {
             segments[langIndex] = encodeURIComponent(defaultLang);
           } else {
             segments.splice(verIndex + 1, 0, encodeURIComponent(defaultLang));
           }
           const fallbackPath = '/' + segments.join('/');
-          window.location.pathname = fallbackPath;
+          
+          fetch(fallbackPath, { method: 'HEAD' })
+            .then(r2 => {
+              if (r2.ok) {
+                window.location.pathname = fallbackPath;
+              } else {
+                const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
+                window.location.pathname = versionIndexFallback;
+              }
+            })
+            .catch(() => {
+              const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
+              window.location.pathname = versionIndexFallback;
+            });
         });
+
     });
   });
 });
@@ -584,16 +609,6 @@ window.addEventListener('keydown', e => {
     });
   }
 });
-
-if (window.console) {
-  console.log(`
-      (')-=-(')
-    __(   "   )__   ~ cra cra brother
-  / _/'-----'\\_ \\
-___\\\\ \\\\     // //___
->____)/_\\---/_\\(____<
-`);
-}
 
 /*
 Silly ahh frog for good luck ~ Niccolò Quadrani
