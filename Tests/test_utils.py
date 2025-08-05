@@ -20,10 +20,10 @@ def handle_remove_readonly(func, path, exc_info):
     func(path)    
 
 def clean_folders():
-    if not(os.path.exists("src")):
+    if os.path.exists("src"):
         shutil.rmtree("src",  onexc=handle_remove_readonly)
 
-    if not(os.path.exists("project")):
+    if os.path.exists("project"):
         shutil.rmtree("project",  onexc=handle_remove_readonly)
 
 # Test functions
@@ -66,4 +66,4 @@ if __name__ == "__main__":
 
     # Test finished
     success("Tests passed.")
-    final_cleaning()
+    clean_folders()
