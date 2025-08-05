@@ -6,7 +6,7 @@ import stat
 # Addding the python tool
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Easy_versioning.main import initial_setup, final_cleaning
+from Easy_versioning.main import initial_setup, final_cleaning, check_default_language
 
 # Utils functions
 def success(message):
@@ -57,8 +57,32 @@ def test_final_cleaning():
     success("Final cleaning working")
     assert True
 
+def test_check_default_language():
+    if os.path.exists("src"):
+        os.mkdir("src/V 1.0")
+        os.mkdir("src/V 2.0")
+        os.mkdir("src/V 1.0/English")
+        os.mkdir("src/V 2.0/English")
+
+    res = check_default_language(["V 1.0", "V 2.0"])
+
+    if res == -1:
+        assert False, "Check default language: Bad resault"
+
+    shutil.rmtree("src/V 1.0/English",  onexc=handle_remove_readonly)
+    shutil.rmtree("src/V 2.0/English",  onexc=handle_remove_readonly)
+    
+    res = check_default_language(["V 1.0", "V 2.0"])
+
+    if res == 0:
+        assert False, "Check default language: Bad resault"
+
+    assert True
+    
 # Using the tests function before an official new version of the tool
 if __name__ == "__main__":
+
+    clean_folders()
 
     # Basic folder handling functions 
     test_initial_setup()
@@ -66,4 +90,6 @@ if __name__ == "__main__":
 
     # Test finished
     success("Tests passed.")
+    test_check_default_language()
+
     clean_folders()
