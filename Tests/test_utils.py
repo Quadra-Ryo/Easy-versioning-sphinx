@@ -6,7 +6,7 @@ import stat
 # Addding the python tool
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Easy_versioning.main import initial_setup, final_cleaning, check_default_language
+from Easy_versioning.main import initial_setup, final_cleaning, check_default_language, get_versions
 
 # Utils functions
 def success(message):
@@ -58,6 +58,7 @@ def test_final_cleaning():
     assert True
 
 def test_check_default_language():
+    # Creating the needed folders
     if os.path.exists("src"):
         os.mkdir("src/V 1.0")
         os.mkdir("src/V 2.0")
@@ -66,9 +67,11 @@ def test_check_default_language():
 
     res = check_default_language(["V 1.0", "V 2.0"])
 
+    # Checking the result
     if res == -1:
         assert False, "Check default language: Bad resault"
 
+    # Removing the default language to check for errors cases
     shutil.rmtree("src/V 1.0/English",  onexc=handle_remove_readonly)
     shutil.rmtree("src/V 2.0/English",  onexc=handle_remove_readonly)
     
@@ -79,6 +82,23 @@ def test_check_default_language():
 
     assert True
     
+def test_get_versions():
+    info("Running get_versions test")
+
+    # Simulazione della struttura _temp/src
+    os.makedirs("_temp/src/V1.0", exist_ok=True)
+    os.makedirs("_temp/src/V2.0", exist_ok=True)
+    os.makedirs("_temp/src/_private", exist_ok=True)  # Should be ignored
+
+    versions = get_versions()
+
+    expected_versions = ["V1.0", "V2.0"]
+    if sorted(versions) != sorted(expected_versions):
+        assert False, f"get_versions: Expected {expected_versions}, but got {versions}"
+
+    success("get_versions working as expected")
+    assert True
+
 # Using the tests function before an official new version of the tool
 if __name__ == "__main__":
 
@@ -92,4 +112,8 @@ if __name__ == "__main__":
     success("Tests passed.")
     test_check_default_language()
 
+    # Cleaning after testing the folder's handling functions
     clean_folders()
+
+    # Project data handling functions tests
+    test_get_versions()
