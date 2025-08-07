@@ -205,14 +205,20 @@ def add_versioning(versions):
             change_language(language)
             lang_path = f"{TEMP_PATH}/src/{version}/{language}"
             # Getting all the ".md" files inside the folders
-            md_files = find_md(lang_path)
+            source_files = find_md(lang_path)
 
             with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
                 footer_content = footer_file.read()
+            
+            footer_content_rst = '.. raw:: html\n\n' + '\n'.join(f'\t{line}' for line in footer_content.splitlines())
 
-            for md_file in md_files:
-                with open(md_file, "a") as file:
-                    file.write("\n\n\n" + footer_content)
+            for source_file in source_files:
+                if source_file.endswith(".md"):    
+                    with open(source_file, "a") as file:
+                        file.write("\n\n\n" + footer_content)
+                else:
+                    with open(source_file, "a") as file:
+                        file.write("\n\n\n" + footer_content_rst)
 
             success(f"Added footer to all Markdown files in: {version} / {language}.")
             # Going back to the placeholder after finishing with the current language
@@ -298,13 +304,13 @@ def find_md(directory):
     info(f"Retrieving all the \".md\" files inside the directory '{directory}'.")
 
     # Looping inside every directory that is not a "_" folder and getting every ".md" file path
-    md_files = []
+    source_files = []
     for root, dirs, files in os.walk(directory):
         dirs[:] = [d for d in dirs if not d.startswith("_")]
         for file in files:
-            if file.endswith(".md"):
-                md_files.append(os.path.join(root, file))
-    return md_files
+            if file.endswith(".md") or file.endswith(".rst"):
+                source_files.append(os.path.join(root, file))
+    return source_files
 
 # Function that runs the Sphinx build command for every version/language folder.
 def build_project(version_languages):
