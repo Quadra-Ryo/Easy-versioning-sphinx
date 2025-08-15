@@ -22,6 +22,7 @@ Easy Versioning offers the following key features:
 -  **Security** by ensuring a safe fallback to an existing page so users are always redirected properly
 -  **Build documentation automatically** using Sphinx for every version and language
 -  **Organize generated HTML files** into a clean, ready-to-deploy structure
+-  **Support for both ".md" and ".rst" files**
 
 ---
 
@@ -38,6 +39,7 @@ Make sure you have the following installed on your system:
 📦 Easy_versioning_Sphinx/  
 ├── 📂 data/  
 │   └── 📄 Footer.md  
+│   └── 📄 Footer.rst  
 ├── 📂 src/  
 │   ├── 📁 V. X.XX/  
 │   │   ├── 🌐 Language 1/  
@@ -48,9 +50,9 @@ Make sure you have the following installed on your system:
 │   ├── 📁 V. Z.ZZ/  
 <br>
 
-You can find a fully working example of a `Footer.md` file in the `Example/data` folder of this project.  
+You can find a fully working example of a `Footer.html` file in the `Example/data` folder of this project.  
 You can start by copying the default file in your `data/` folder and then customize it as you wish by modifying the CSS.  
-If you want to create your own `Footer.md` file, please follow the placeholder tags as shown in the example in the folder.
+If you want to create your own `Footer.html` file, please follow the placeholder tags as shown in the example in the folder.
 
 <br>
 
