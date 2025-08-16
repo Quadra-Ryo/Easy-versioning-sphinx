@@ -521,6 +521,51 @@ def easy_versioning_build():
 
     start_quick_server(link_data[0], link_data[1])
 
+################################################################################## Library utils functions
+def initial_set_up():
+    """
+    Simple easy-versioning project set-up.
+    """
+    args = sys.argv[1:]  # Takes the parameters from the command line
+    title = args[0] if len(args) > 0 else "Documentation"
+    author = args[1] if len(args) > 1 else "Author"
+
+    src_path = os.path.join(TEMP_PATH, "src")  # "src" folder path
+    data_path = os.path.join(TEMP_PATH, "data")  # "data" folder path
+    version_paths = [
+        [os.path.join(TEMP_PATH, "src", "V. 1.0"), "1.0"],
+        [os.path.join(TEMP_PATH, "src", "V. 2.0"), "2.0"]
+    ]  # Versions of the documentation folder
+
+    if not os.path.exists(src_path):  # If no "src" folder is found
+        for version in version_paths:
+            os.makedirs(version[0], exist_ok=True)  # Creating the src/version folder
+            command = [
+                "sphinx-quickstart",
+                "--quiet",
+                "-p", title,
+                "-a", author,
+                "-v", version[1],
+                "--sep"
+            ]
+
+            try:
+                # Running the build command inside of the specific folder
+                result = subprocess.run(
+                    command, capture_output = True, text = True, cwd = version[0]
+                )
+
+                if result.returncode == 0:
+                    success(f"Sphinx set-up completed for {version[1]}.")
+                else:
+                    error(f"Sphinx set-up failed for {version[1]}.")
+                    error(f"{result.stderr}.")
+            except Exception as e:
+                error(f"Exception during the set-up {e}.")
+
+    if not os.path.exists(data_path):
+        os.makedirs(data_path, exist_ok = True)        
+
 ################################################################################## Main
 
 if __name__ == "__main__":
