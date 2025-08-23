@@ -6,7 +6,7 @@ import stat
 # Addding the python tool
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Easy_versioning.main import initial_setup, final_cleaning, check_default_language, get_versions
+from Easy_versioning.main import initial_setup, final_cleaning, check_default_language, get_versions, initial_set_up
 
 # Utils functions
 def success(message):
@@ -98,6 +98,30 @@ def test_get_versions():
 
     success("get_versions working as expected")
     assert True
+
+def test_initial_set_up():
+    info("Running initial_set_up test")
+
+    # Cleaning the folders
+    for folder in ["src", "data"]:
+        if os.path.exists(folder):
+            shutil.rmtree(folder, onerror=handle_remove_readonly)
+
+    # Calling the initial_set_up function
+    initial_set_up()
+
+    # Checking the main folders
+    assert os.path.exists("src"), "initial_set_up: 'src' not created"
+    assert os.path.exists("data"), "initial_set_up: 'data' not created"
+
+    # Checking the versions
+    expected_versions = ["V. 1.0", "V. 2.0"]
+    for version in expected_versions:
+        version_path = os.path.join("src", version)
+        assert os.path.exists(version_path), f"initial_set_up: version folder '{version}' not created"
+
+    success("initial_set_up working as expected")
+
 
 # Using the tests function before an official new version of the tool
 if __name__ == "__main__":
