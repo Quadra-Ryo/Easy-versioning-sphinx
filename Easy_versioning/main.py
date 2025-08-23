@@ -15,7 +15,7 @@ clean_website = True
 # Get the terminal path from which the script is executed
 BASE_DIR = os.getcwd()
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__)) # Main script folder
-DEFAULT_FOOTER = os.path.join(MODULE_DIR, "data", "footer.md")
+DEFAULT_FOOTER = os.path.join(MODULE_DIR, "data", "footer.html")
 
 # Initialize paths used throughout the script
 FOOTER_PATH = os.path.join(BASE_DIR, "data")
@@ -87,12 +87,12 @@ def initial_setup():
         
         # Copying the input data to the "_temp" folder to keep the src clean
         shutil.copytree(SRC_PATH, os.path.join(TEMP_PATH, "src"), dirs_exist_ok=True)
-        footer_path = os.path.join(FOOTER_PATH, "footer.md")
+        footer_path = os.path.join(FOOTER_PATH, "footer.html")
         if os.path.exists(footer_path):
-            shutil.copy(footer_path, os.path.join(TEMP_PATH, "data", "footer.md"))
+            shutil.copy(footer_path, os.path.join(TEMP_PATH, "data", "footer.html"))
         else:
             warning(f"Using the default footer: {DEFAULT_FOOTER}")
-            shutil.copy(DEFAULT_FOOTER, os.path.join(TEMP_PATH, "data", "footer.md"))
+            shutil.copy(DEFAULT_FOOTER, os.path.join(TEMP_PATH, "data", "footer.html"))
 
         info("Data has been copied successfully.")
                  
@@ -168,7 +168,7 @@ def project_data_setup(versions):
         for i, v in enumerate(versions)
     )
 
-    with open(f"{TEMP_PATH}/data/footer.md", "r") as footer_file:
+    with open(f"{TEMP_PATH}/data/footer.html", "r") as footer_file:
         footer = footer_file.read()
     
     # Replacing the file placeholders
@@ -176,7 +176,7 @@ def project_data_setup(versions):
     footer = footer.replace("{v_list}", version_list)
     footer = footer.replace("{default_language}", default_language)
 
-    with open(f"{TEMP_PATH}/data/footer.md", "w") as footer_file:
+    with open(f"{TEMP_PATH}/data/footer.html", "w") as footer_file:
         footer_file.write(footer)
 
     # Printing the usefull infos  
@@ -207,7 +207,7 @@ def add_versioning(versions):
             # Getting all the ".md" files inside the folders
             source_files = find_md(lang_path)
 
-            with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
+            with open(f"{TEMP_PATH}/data/temp_footer.html", "r") as footer_file:
                 footer_content = footer_file.read()
             
             footer_content_rst = '.. raw:: html\n\n' + '\n'.join(f'\t{line}' for line in footer_content.splitlines())
@@ -239,14 +239,14 @@ def languages_current_version_setup(version):
     languages = []
     
     # Creating a copy of the "standard project" footer where I'm gonna add only the specific version/file data
-    shutil.copy(f"{TEMP_PATH}/data/footer.md", f"{TEMP_PATH}/data/temp_footer.md")
+    shutil.copy(f"{TEMP_PATH}/data/footer.html", f"{TEMP_PATH}/data/temp_footer.html")
 
     # Variables intitial set-up
     language_list = "["
     version_path = f"{TEMP_PATH}/src/{version}"
 
         
-    with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.html", "r") as footer_file:
         footer = footer_file.read()
 
     for folder in os.listdir(version_path):
@@ -269,7 +269,7 @@ def languages_current_version_setup(version):
     footer = footer.replace("{l_list}", language_list)
     footer = footer.replace("{default_language}", default_language)
 
-    with open(f"{TEMP_PATH}/data/temp_footer.md", "w") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.html", "w") as footer_file:
         footer_file.write(footer)
         
     info(f"Found languages for version '{version}': {language_list}.")
@@ -282,7 +282,7 @@ def change_language(language):
     Insert the selected language into the temporary footer file.
     """
 
-    with open(f"{TEMP_PATH}/data/temp_footer.md", "r") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.html", "r") as footer_file:
         footer = footer_file.read()
 
     # Replacing the placeholder with the languages the first time and than back with the placeholder
@@ -291,7 +291,7 @@ def change_language(language):
     else:
         footer = footer.replace(f"{language}</s", "{language}</s")
         
-    with open(f"{TEMP_PATH}/data/temp_footer.md", "w") as footer_file:
+    with open(f"{TEMP_PATH}/data/temp_footer.html", "w") as footer_file:
         footer_file.write(footer)
 
 # Function that search for all the ".md" files inside of a directory
@@ -530,11 +530,11 @@ def initial_set_up():
     title = args[0] if len(args) > 0 else "Documentation"
     author = args[1] if len(args) > 1 else "Author"
 
-    src_path = os.path.join(TEMP_PATH, "src")  # "src" folder path
-    data_path = os.path.join(TEMP_PATH, "data")  # "data" folder path
+    src_path = os.path.join(BASE_DIR, "src")  # "src" folder path
+    data_path = os.path.join(BASE_DIR, "data")  # "data" folder path
     version_paths = [
-        [os.path.join(TEMP_PATH, "src", "V. 1.0"), "1.0"],
-        [os.path.join(TEMP_PATH, "src", "V. 2.0"), "2.0"]
+        [os.path.join(BASE_DIR, "src", "V. 1.0"), "1.0"],
+        [os.path.join(BASE_DIR, "src", "V. 2.0"), "2.0"]
     ]  # Versions of the documentation folder
 
     if not os.path.exists(src_path):  # If no "src" folder is found
