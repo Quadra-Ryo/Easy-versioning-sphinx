@@ -526,45 +526,89 @@ def initial_set_up():
     """
     Simple easy-versioning project set-up.
     """
-    args = sys.argv[1:]  # Takes the parameters from the command line
-    title = args[0] if len(args) > 0 else "Documentation"
-    author = args[1] if len(args) > 1 else "Author"
 
-    src_path = os.path.join(BASE_DIR, "src")  # "src" folder path
-    data_path = os.path.join(BASE_DIR, "data")  # "data" folder path
-    version_paths = [
-        [os.path.join(BASE_DIR, "src", "V. 1.0"), "1.0"],
-        [os.path.join(BASE_DIR, "src", "V. 2.0"), "2.0"]
-    ]  # Versions of the documentation folder
+    try:
+        info("Setting up the project structure")
+        
+        args = sys.argv[1:]  # Takes the parameters from the command line
+        title = args[0] if len(args) > 0 else "Documentation"
+        author = args[1] if len(args) > 1 else "Author"
 
-    if not os.path.exists(src_path):  # If no "src" folder is found
-        for version in version_paths:
-            os.makedirs(version[0], exist_ok=True)  # Creating the src/version folder
-            command = [
-                "sphinx-quickstart",
-                "--quiet",
-                "-p", title,
-                "-a", author,
-                "-v", version[1],
-                "--sep"
-            ]
+        src_path = os.path.join(BASE_DIR, "src")  # "src" folder path
 
+        version_paths = [
+            [os.path.join(BASE_DIR, "src", "V. 1.0"), "1.0"],
+            [os.path.join(BASE_DIR, "src", "V. 2.0"), "2.0"]
+        ]  # Versions of the documentation folder
+
+        info("Creating the versions and the sphinx projects")
+
+        # Check if sphinx is available
+        subprocess.run(["sphinx-quickstart", "--version"], capture_output=True, text=True, check=True)
+
+
+        # Create version directories and initialize sphinx projects
+        if not os.path.exists(src_path):  # If no "src" folder is found
+            for version in version_paths:
+                version_dir = version[0]
+                if os.path.exists(version_dir) and not os.path.isdir(version_dir):
+                    error(f"Path exists but is not a directory: {version_dir}")
+                    return
+                
+                os.makedirs(version[0], exist_ok=True)  # Creating the src/version folder
+                command = [
+                    "sphinx-quickstart",
+                    "--quiet",
+                    "-p", title,
+                    "-a", author,
+                    "-v", version[1],
+                    "--sep"
+                ]
+                
+                try:
+                    result = subprocess.run(command, capture_output=True, text=True, cwd=version[0])
+                    if result.returncode == 0:
+                        success(f"Sphinx set-up completed for {version[1]}.")
+                    else:
+                        error(f"Sphinx set-up failed for {version[1]}.")
+                        error(f"{result.stderr}.")
+                except Exception as e:
+                    error(f"Exception during the set-up {e}.")
+                    return
+
+        # Handle data folder
+        info("Handling the data function")
+        data_path = os.path.join(BASE_DIR, "data")
+
+        # Check if permissions allow to modify the data directory
+        if not os.access(BASE_DIR, os.W_OK):
+            error(f"Permission denied: Cannot write to {BASE_DIR}")
+            return
+        
+        if os.path.exists(data_path):
             try:
-                # Running the build command inside of the specific folder
-                result = subprocess.run(
-                    command, capture_output = True, text = True, cwd = version[0]
-                )
-
-                if result.returncode == 0:
-                    success(f"Sphinx set-up completed for {version[1]}.")
-                else:
-                    error(f"Sphinx set-up failed for {version[1]}.")
-                    error(f"{result.stderr}.")
+                shutil.rmtree(data_path, onexc=handle_remove_readonly)
             except Exception as e:
-                error(f"Exception during the set-up {e}.")
+                error(f"Failed to remove directory {data_path}: {e}")
+                return
+        
+        os.makedirs(data_path, exist_ok=True)
 
-    if not os.path.exists(data_path):
-        os.makedirs(data_path, exist_ok = True)        
+        footer_path = os.path.join(FOOTER_PATH, "footer.html")
+        if not os.path.exists(footer_path):
+            error(f"Footer file does not exist: {footer_path}")
+            return
+        try:
+            shutil.copy(footer_path, data_path)
+            success(f"Copied footer from {footer_path} to {data_path}")
+        except Exception as e:
+            error(f"Failed to copy footer: {e}")
+            return
+
+        success("Initial set-up ended!")
+    except Exception as e:
+        error(f"An unexpected error occurred: {e}")
+
 
 ################################################################################## Main
 
