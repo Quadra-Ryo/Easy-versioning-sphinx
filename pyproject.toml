@@ -29,6 +29,7 @@ packages = ["easy_versioning"]
 "easy_versioning" = ["data/*"]
 
 [project.scripts]
-easy_versioning_build = "easy_versioning.main:easy_versioning_build"
+easy-versioning-build = "easy_versioning.main:easy_versioning_build"
+easy-versioning-setup = "easy_versioning.main:initial_set_up"
 
 

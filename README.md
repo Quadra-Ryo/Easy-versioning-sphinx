@@ -72,7 +72,8 @@ It includes detailed guides in Italian, English, and German, additionally, you c
 You can find a simple and easy documentation below:   
 
 The tool requires the directory structure shown above.  
-After opening a terminal in the project’s source directory (which contains the `data/` and `src/` folders), run the command `easy_versioning_build`.
+You can use the `easy-versioning-setup` command to set up the folders with the correct layout for an easy-versioning project. This function takes two parameters as input: the project name and the author name, which are used to set up the Sphinx project, if no arguments are provided the default name is gonna be "Documentation" and the author "Author".   
+After opening a terminal in the project’s source directory (which contains the `data/` and `src/` folders), run the command `easy-versioning-build` to build your project.
 
 This command can be run without any arguments, or with up to two arguments:
 
@@ -81,8 +82,8 @@ This command can be run without any arguments, or with up to two arguments:
    - Set this flag to `0` to disable cleanup and keep the `_source` directory.
 
 Examples:  
-- `easy_versioning_build` — Uses English as the default language and removes the `_source` directory.  
-- `easy_versioning_build Italiano 0` — Sets Italian as the default language and keeps the `_source` directory intact. 
+- `easy-versioning-build` — Uses English as the default language and removes the `_source` directory.  
+- `easy-versioning-build Italiano 0` — Sets Italian as the default language and keeps the `_source` directory intact. 
 
 ---
 
