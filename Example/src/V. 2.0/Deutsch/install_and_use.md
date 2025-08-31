@@ -14,7 +14,7 @@ Zuerst sollte die Projektstruktur für die Dokumentation wie folgt aufgebaut sei
 
 📦 Easy_versioning_Sphinx/  
 ├── 📂 data/  
-│   └── 📄 Footer.md  
+│   └── 📄 Footer.html  
 ├── 📂 src/  
 │   ├── 📁 V. X.XX/  
 │   │   ├── 🌐 Sprache 1/  
@@ -23,6 +23,12 @@ Zuerst sollte die Projektstruktur für die Dokumentation wie folgt aufgebaut sei
 │   │       └── 📘 Sprache 2 Sphinx-Projekt/  
 │   ├── 📁 V. Y.YY/  
 │   ├── 📁 V. Z.ZZ/
+
+Falls ein Projekt noch nicht gestartet wurde, kann der Befehl `easy-versioning-setup` verwendet werden, um die oben dargestellte Struktur automatisch zu erzeugen und so die ersten Entwicklungsphasen zu vereinfachen.  
+Der Befehl `easy-versioning-setup` akzeptiert bis zu zwei optionale Parameter: den **Projektnamen** und den **Autornamen**. Wenn diese nicht angegeben werden, werden die Standardwerte "Documentation" und "Author" verwendet.  
+Die eingegebenen Parameter werden ausschließlich für die Erstellung des Sphinx-Projekts innerhalb der konfigurierten Ordner genutzt und dürfen keine Leerzeichen enthalten.  
+Beispiel:  
+`easy-versioning-setup Test_Easy_Versioning Niccolò_Quadrani`
 
 Anschließend eine Konsole öffnen, in das Hauptverzeichnis des Projekts wechseln (in unserem Beispiel `Easy_versioning_Sphinx/`) und folgenden Befehl ausführen: `Easy_versioning_build`
 

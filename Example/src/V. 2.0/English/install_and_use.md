@@ -14,7 +14,7 @@ First, structure your documentation project folders as follows:
 
 📦 Easy_versioning_Sphinx/  
 ├── 📂 data/  
-│   └── 📄 Footer.md  
+│   └── 📄 Footer.hmtl   
 ├── 📂 src/  
 │   ├── 📁 V. X.XX/  
 │   │   ├── 🌐 Language 1/  
@@ -23,6 +23,13 @@ First, structure your documentation project folders as follows:
 │   │       └── 📘 Language 2 Sphinx Project/  
 │   ├── 📁 V. Y.YY/  
 │   ├── 📁 V. Z.ZZ/
+
+
+If a project has not yet been started, the `easy-versioning-setup` command can be used to automatically generate the structure shown above, thus simplifying the initial development phases.    
+The `easy-versioning-setup` command accepts up to two optional parameters: the **project name** and the **author name**. If not specified, the default values "Documentation" and "Author" will be assigned.     
+The input parameters will be used exclusively for creating the Sphinx project within the configured folders and must not contain spaces.     
+Example:     
+`easy-versioning-setup Test_Easy_Versioning Niccolò_Quadrani`   
 
 Then open a terminal, navigate to the project’s root folder (in this example, `Easy_versioning_Sphinx/`), and run the command:
 `Easy_versioning_build`
