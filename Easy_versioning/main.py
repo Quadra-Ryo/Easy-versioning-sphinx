@@ -537,8 +537,8 @@ def initial_set_up():
         src_path = os.path.join(BASE_DIR, "src")  # "src" folder path
 
         version_paths = [
-            [os.path.join(BASE_DIR, "src", "V. 1.0"), "1.0"],
-            [os.path.join(BASE_DIR, "src", "V. 2.0"), "2.0"]
+            [os.path.join(BASE_DIR, "src", "V. 1.0", "English"), "1.0"],
+            [os.path.join(BASE_DIR, "src", "V. 2.0", "English"), "2.0"]
         ]  # Versions of the documentation folder
 
         info("Creating the versions and the sphinx projects")
