@@ -594,13 +594,12 @@ def initial_set_up():
         
         os.makedirs(data_path, exist_ok=True)
 
-        footer_path = os.path.join(FOOTER_PATH, "footer.html")
-        if not os.path.exists(footer_path):
-            error(f"Footer file does not exist: {footer_path}")
+        if not os.path.exists(DEFAULT_FOOTER):
+            error(f"Footer file does not exist: {DEFAULT_FOOTER}")
             return
         try:
-            shutil.copy(footer_path, data_path)
-            success(f"Copied footer from {footer_path} to {data_path}")
+            shutil.copy(DEFAULT_FOOTER, data_path)
+            success(f"Copied footer from {DEFAULT_FOOTER} to {data_path}")
         except Exception as e:
             error(f"Failed to copy footer: {e}")
             return
