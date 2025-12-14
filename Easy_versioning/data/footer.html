@@ -127,146 +127,22 @@
 </div>
 
 <script>
-  document.querySelectorAll('.fixed-bar .dropdown').forEach(dropdown => {
-  const toggle = dropdown.querySelector('.dropdown-toggle');
-  const menu = dropdown.querySelector('.dropdown-menu');
-  const displaySpan = dropdown.querySelector('.current-value');
+document.addEventListener("DOMContentLoaded", () => {
 
-  // Toggle dropdown menu on click
-  toggle.addEventListener('click', e => {
-    e.stopPropagation();
-    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+  const bar = document.querySelector('.fixed-bar');
+  const dropdowns = bar.querySelectorAll('.dropdown');
+  const defaultLang = '{default_language}';
+  const languages = {l_list};
+  const versions = {v_list};
 
-    // Close other open dropdown menus
-    document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    dropdown.closest('.fixed-bar').querySelectorAll('.dropdown-toggle').forEach(t => {
-      t.setAttribute('aria-expanded', 'false');
-      const caret = t.querySelector('.caret-icon');
-      if (caret) {
-        caret.classList.remove('fa-caret-up');
-        caret.classList.add('fa-caret-down');
-      }
-    });
+  // ---------------------------
+  // Helpers
+  // ---------------------------
 
-    // Show or hide this menu
-    if (!isExpanded) {
-      menu.classList.add('show');
-      toggle.setAttribute('aria-expanded', 'true');
-      const caret = toggle.querySelector('.caret-icon');
-      if (caret) {
-        caret.classList.remove('fa-caret-down');
-        caret.classList.add('fa-caret-up');
-      }
-    }
-  });
-
-  // Handle selection of a version or language
-  menu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const selectedValue = link.textContent.trim();
-      displaySpan.textContent = selectedValue;
-
-      const currentPath = window.location.pathname;
-      const segments = currentPath.split('/').filter(Boolean);
-
-      const languages = {l_list};      // List of available languages
-      const versions = {v_list};       // List of available versions
-      const defaultLang = '{default_language}'; // Default language fallback
-
-      // Find indexes of language and version in URL
-      const langIndex = segments.findIndex(s => languages.includes(decodeURIComponent(s)));
-      const verIndex = segments.findIndex(s => versions.includes(decodeURIComponent(s)));
-
-      // Replace language or version in the path
-      if (toggle.textContent.includes('Language') && langIndex !== -1) {
-        segments[langIndex] = encodeURIComponent(selectedValue);
-      }
-      if (toggle.textContent.includes('Version') && verIndex !== -1) {
-        const fullVersion = versions.find(v => v.endsWith(selectedValue)) || selectedValue;
-        segments[verIndex] = encodeURIComponent(fullVersion);
-      }
-
-      // Build the new path
-      const newPath = '/' + segments.join('/');
-
-      fetch(newPath, { method: 'HEAD' })
-        .then(response => {
-          if (response.ok) {
-            // If exists, redirect to new path
-            window.location.pathname = newPath;
-          } else {
-            // Fallback: use default language
-            if (langIndex !== -1) {
-              segments[langIndex] = encodeURIComponent(defaultLang);
-            } else {
-              // If no lang index, insert default language
-              segments.splice(verIndex + 1, 0, encodeURIComponent(defaultLang));
-            }
-            const fallbackPath = '/' + segments.join('/');
-
-            fetch(fallbackPath, { method: 'HEAD' })
-              .then(r2 => {
-                if (r2.ok) {
-                  window.location.pathname = fallbackPath;
-                } else {
-                  const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
-                  window.location.pathname = versionIndexFallback;
-                }
-              })
-              .catch(() => {
-                const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
-                window.location.pathname = versionIndexFallback;
-              });
-          }
-        })
-        .catch(() => {
-          if (langIndex !== -1) {
-            segments[langIndex] = encodeURIComponent(defaultLang);
-          } else {
-            segments.splice(verIndex + 1, 0, encodeURIComponent(defaultLang));
-          }
-          const fallbackPath = '/' + segments.join('/');
-          
-          fetch(fallbackPath, { method: 'HEAD' })
-            .then(r2 => {
-              if (r2.ok) {
-                window.location.pathname = fallbackPath;
-              } else {
-                const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
-                window.location.pathname = versionIndexFallback;
-              }
-            })
-            .catch(() => {
-              const versionIndexFallback = '/' + segments[0] + '/' + segments[1] + '/index.html';
-              window.location.pathname = versionIndexFallback;
-            });
-        });
-
-    });
-  });
-});
-
-// Close all dropdowns when clicking outside
-window.addEventListener('click', () => {
-  document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(menu => menu.classList.remove('show'));
-  document.querySelectorAll('.fixed-bar .dropdown-toggle').forEach(t => {
-    t.setAttribute('aria-expanded', 'false');
-    const caret = t.querySelector('.caret-icon');
-    if (caret) {
-      caret.classList.remove('fa-caret-up');
-      caret.classList.add('fa-caret-down');
-    }
-  });
-});
-
-// Close all dropdowns when pressing Escape
-window.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.fixed-bar .dropdown-menu').forEach(menu => menu.classList.remove('show'));
-    document.querySelectorAll('.fixed-bar .dropdown-toggle').forEach(t => {
+  function closeAll() {
+    dropdowns.forEach(d => {
+      d.querySelector('.dropdown-menu').classList.remove('show');
+      const t = d.querySelector('.dropdown-toggle');
       t.setAttribute('aria-expanded', 'false');
       const caret = t.querySelector('.caret-icon');
       if (caret) {
@@ -275,6 +151,104 @@ window.addEventListener('keydown', e => {
       }
     });
   }
+
+  function toggleMenu(dropdown) {
+    const toggle = dropdown.querySelector('.dropdown-toggle');
+    const menu = dropdown.querySelector('.dropdown-menu');
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+    closeAll();
+    if (!isOpen) {
+      menu.classList.add('show');
+      toggle.setAttribute('aria-expanded', 'true');
+      const caret = toggle.querySelector('.caret-icon');
+      if (caret) {
+        caret.classList.remove('fa-caret-down');
+        caret.classList.add('fa-caret-up');
+      }
+    }
+  }
+
+  async function pathExists(path) {
+    try {
+      const r = await fetch(path, { method: 'HEAD' });
+      return r.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  async function resolvePath(segments, newLang, newVer) {
+    const seg = [...segments];
+
+    const langIndex = seg.findIndex(s => languages.includes(decodeURIComponent(s)));
+    const verIndex = seg.findIndex(s => versions.includes(decodeURIComponent(s)));
+
+    if (newLang) seg[langIndex] = encodeURIComponent(newLang);
+    if (newVer) seg[verIndex] = encodeURIComponent(newVer);
+
+    const primary = "/" + seg.join("/");
+
+    if (await pathExists(primary)) return primary;
+
+    // Fallback: default language
+    if (newLang) {
+      seg[langIndex] = encodeURIComponent(defaultLang);
+    }
+    const fallback = "/" + seg.join("/");
+    if (await pathExists(fallback)) return fallback;
+
+    // Last fallback -> /version/language/index.html
+    return `/${seg[0]}/${seg[1]}/index.html`;
+  }
+
+  // ---------------------------
+  // Events
+  // ---------------------------
+
+  dropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector('.dropdown-toggle');
+    const menu = dropdown.querySelector('.dropdown-menu');
+    const display = dropdown.querySelector('.current-value');
+
+    toggle.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleMenu(dropdown);
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', async e => {
+        e.preventDefault();
+
+        const selected = link.textContent.trim();
+        display.textContent = selected;
+
+        const segments = window.location.pathname.split("/").filter(Boolean);
+
+        const isLang = toggle.textContent.includes("Language");
+        const isVer = toggle.textContent.includes("Version");
+
+        let newLang = null, newVer = null;
+
+        if (isLang) newLang = selected;
+        if (isVer) {
+          newVer = versions.find(v => v.endsWith(selected)) || selected;
+        }
+
+        const newPath = await resolvePath(segments, newLang, newVer);
+        window.location.pathname = newPath;
+      });
+    });
+  });
+
+  // Outside click closes all
+  window.addEventListener('click', closeAll);
+
+  // Escape closes all
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeAll();
+  });
+
 });
 
 /*
