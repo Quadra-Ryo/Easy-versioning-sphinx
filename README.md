@@ -38,17 +38,21 @@ Make sure you have the following installed on your system:
 ## Directory Setup
 📦 Easy_versioning_Sphinx/  
 ├── 📂 data/  
-│   └── 📄 Footer.md  
-│   └── 📄 Footer.rst  
+│   ├── 📄 Footer.html  
 ├── 📂 src/  
-│   ├── 📁 V. X.XX/  
-│   │   ├── 🌐 Language 1/  
-│   │   │   └── 📘 Language 1 Sphinx Project/  
-│   │   └── 🌐 Language 2/  
-│   │       └── 📘 Language 2 Sphinx Project/  
-│   ├── 📁 V. Y.YY/  
-│   ├── 📁 V. Z.ZZ/  
-<br>
+│   ├── 📁 V. 1.0/  
+│   │   ├── 🌐 Italiano/  
+│   │   │   └── 📘 [Progetto Sphinx]/  
+│   │   ├── 🌐 English/  
+│   │   │   └── 📘 [Progetto Sphinx]/  
+│   │   └── 🌐 Deutsch/  
+│   │       └── 📘 [Progetto Sphinx]/  
+│   ├── 📁 V. 2.0/  
+│   │   ├── 🌐 Italiano/  
+│   │   └── 🌐 English/  
+│   └── 📁 V. 3.0/  
+│       └── 🌐 English/  
+<br>  
 
 You can find a fully working example of a `Footer.html` file in the `Example/data` folder of this project.  
 You can start by copying the default file in your `data/` folder and then customize it as you wish by modifying the CSS.  
