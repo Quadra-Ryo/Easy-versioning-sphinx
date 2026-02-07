@@ -3,33 +3,110 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Easy_versioning"
-version = "1.0.8"
-description = "A Sphinx extension/tool to manage multi-version and multi-language documentation builds without relying on ReadTheDocs."
-authors = [
-    { name="Niccolò Quadrani", email="niccoloquadrani13@gmail.com" }
-]
+name = "easy-versioning"
+version = "2.0.0"
+description = "Professional multi-version and multi-language documentation builder for Sphinx without ReadTheDocs dependency"
 readme = "README.md"
-license =  "MIT"
+license = {text = "MIT"}
 requires-python = ">=3.8"
-keywords = ["sphinx", "documentation", "versioning", "multi-language", "RTD", "Read The Docs"]
+authors = [
+    {name = "Niccolò Quadrani", email = "niccoloquadrani13@gmail.com"}
+]
+maintainers = [
+    {name = "Niccolò Quadrani", email = "niccoloquadrani13@gmail.com"}
+]
+keywords = [
+    "sphinx",
+    "documentation",
+    "versioning",
+    "multi-language",
+    "multi-version",
+    "docs",
+    "RTD",
+    "ReadTheDocs",
+    "documentation-generator",
+    "static-site"
+]
+classifiers = [
+    "Development Status :: 4",
+    "Intended Audience :: Developers",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Documentation",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Framework :: Sphinx"
+]
 dependencies = [
-    "termcolor>=2.0",
     "sphinx>=6.0",
+    "termcolor>=2.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "flake8>=6.0",
+    "mypy>=1.0",
+    "sphinx-rtd-theme>=1.0"
+]
+docs = [
+    "sphinx-rtd-theme>=1.0",
+    "sphinx-copybutton>=0.5"
 ]
 
 [project.urls]
 Homepage = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx"
-Issues = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx/issues"
-
-[tool.setuptools]
-packages = ["easy_versioning"]
-
-[tool.setuptools.package-data]
-"easy_versioning" = ["data/*"]
+Documentation = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx#readme"
+Repository = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx"
+Changelog = "https://github.com/Quadra-Ryo/Easy-versioning-sphinx/releases"
 
 [project.scripts]
 easy-versioning-build = "easy_versioning.main:easy_versioning_build"
 easy-versioning-setup = "easy_versioning.main:initial_set_up"
+[tool.setuptools]
+packages = ["easy_versioning", "easy_versioning.core", "easy_versioning.utils", "easy_versioning.builders"]
+include-package-data = true
 
+[tool.setuptools.package-data]
+easy_versioning = ["data/*", "data/**/*"]
 
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --cov=easy_versioning --cov-report=term-missing --cov-report=html"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+disallow_untyped_calls = false
